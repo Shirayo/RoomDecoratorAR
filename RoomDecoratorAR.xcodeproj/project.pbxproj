@@ -19,6 +19,10 @@
 		F99CE5ED27EB0BB100CDF225 /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5EC27EB0BB100CDF225 /* ShopView.swift */; };
 		F99CE5EF27EB0C0D00CDF225 /* FavouritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */; };
 		F99CE5F127EB143600CDF225 /* RoomItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F027EB143600CDF225 /* RoomItemsView.swift */; };
+		F99CE5F327EB1D8700CDF225 /* BottomSheetVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F227EB1D8700CDF225 /* BottomSheetVIew.swift */; };
+		F99CE5F627EB2AE700CDF225 /* UIScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F527EB2AE700CDF225 /* UIScreenExtension.swift */; };
+		F99CE5F827EB370600CDF225 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F727EB370600CDF225 /* ViewExtension.swift */; };
+		F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,10 @@
 		F99CE5EC27EB0BB100CDF225 /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
 		F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesView.swift; sourceTree = "<group>"; };
 		F99CE5F027EB143600CDF225 /* RoomItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomItemsView.swift; sourceTree = "<group>"; };
+		F99CE5F227EB1D8700CDF225 /* BottomSheetVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetVIew.swift; sourceTree = "<group>"; };
+		F99CE5F527EB2AE700CDF225 /* UIScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreenExtension.swift; sourceTree = "<group>"; };
+		F99CE5F727EB370600CDF225 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +112,8 @@
 		F99CE5BA27EB014200CDF225 /* RoomDecoratorAR */ = {
 			isa = PBXGroup;
 			children = (
+				F99CE5F927EB371400CDF225 /* Utils */,
+				F99CE5F427EB2ACE00CDF225 /* Extensions */,
 				F99CE5E827EB08DC00CDF225 /* Models */,
 				F99CE5E727EB08D600CDF225 /* Views */,
 				F99CE5E927EB08EE00CDF225 /* ViewModels */,
@@ -148,6 +158,7 @@
 				F99CE5EC27EB0BB100CDF225 /* ShopView.swift */,
 				F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */,
 				F99CE5F027EB143600CDF225 /* RoomItemsView.swift */,
+				F99CE5F227EB1D8700CDF225 /* BottomSheetVIew.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +175,23 @@
 			children = (
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F99CE5F427EB2ACE00CDF225 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F99CE5F527EB2AE700CDF225 /* UIScreenExtension.swift */,
+				F99CE5F727EB370600CDF225 /* ViewExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F99CE5F927EB371400CDF225 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,11 +325,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				F99CE5BE27EB014200CDF225 /* ContentView.swift in Sources */,
+				F99CE5F627EB2AE700CDF225 /* UIScreenExtension.swift in Sources */,
+				F99CE5F327EB1D8700CDF225 /* BottomSheetVIew.swift in Sources */,
 				F99CE5F127EB143600CDF225 /* RoomItemsView.swift in Sources */,
+				F99CE5F827EB370600CDF225 /* ViewExtension.swift in Sources */,
 				F99CE5BC27EB014200CDF225 /* AppDelegate.swift in Sources */,
 				F99CE5EB27EB091800CDF225 /* TabBarView.swift in Sources */,
 				F99CE5ED27EB0BB100CDF225 /* ShopView.swift in Sources */,
 				F99CE5EF27EB0C0D00CDF225 /* FavouritesView.swift in Sources */,
+				F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */,
 				F99CE5C027EB014200CDF225 /* Experience.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,6 +503,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -502,6 +535,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

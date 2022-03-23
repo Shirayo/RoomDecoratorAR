@@ -9,8 +9,8 @@ import SwiftUI
 import RealityKit
 
 struct ContentView : View {
-    
-    @State private var isMenuOpen: Bool = false
+        
+    @State private var screenHeight: CGFloat = 0 //UIScreen.screenHeight
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -29,7 +29,7 @@ struct ContentView : View {
                 Spacer()
                 Button {
                     print("show sheet with tab bar")
-                    isMenuOpen = true
+                    screenHeight = 0
                 } label: {
                     Image("plus")
                         .resizable()
@@ -49,12 +49,7 @@ struct ContentView : View {
                 Spacer()
 
             }.padding(.bottom, 20)
-                .sheet(isPresented: $isMenuOpen) {
-                    
-                } content: {
-                    TabBarView()
-                }
-
+            BottomSheetVIew(translationY: $screenHeight)
         }
     }
 }
@@ -79,10 +74,11 @@ struct ARViewContainer: UIViewRepresentable {
     
 }
 
+
 #if DEBUG
-struct ContentView_Previews : PreviewProvider {
-    static var previews: some View {
-        ContentView().previewDevice("iPhone 13 Pro").background(.gray)
-    }
-}
+//struct ContentView_Previews : PreviewProvider {
+//    static var previews: some View {
+//        ContentView().previewDevice("iPhone 13 Pro").background(.gray)
+//    }
+//}
 #endif

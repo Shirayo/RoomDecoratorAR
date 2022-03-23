@@ -29,14 +29,16 @@ struct TabBarView: View {
                     Image("layers")
                         .resizable()
                         .frame(width: 40, height: 40)
-                    Text("Favourites")
+                    Text("Room Items")
                 }
         }
     }
 }
 
-struct TabBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        TabBarView()
-    }
-}
+
+
+//struct TabBarView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TabBarView()
+//    }
+//}

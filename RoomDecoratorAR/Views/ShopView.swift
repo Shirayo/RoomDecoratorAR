@@ -10,13 +10,31 @@ import SwiftUI
 struct ShopView: View {
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-        }.background(.red)
+            ZStack(alignment: .topLeading) {
+                Image("apartments")
+                    .resizable()
+                    .scaledToFill()
+                Color.black.opacity(0.25)
+                Text("Good morning")
+                    .foregroundColor(.white)
+                    .font(.system(size: 32, weight: .semibold))
+                    .padding(.top, 30)
+                    .padding(.leading, 20)
+            }.frame(height: 200)
+            Spacer()
+        }.background(.white)
+        
     }
 }
 
-struct ShopView_Previews: PreviewProvider {
+struct ContentView_Previews2 : PreviewProvider {
     static var previews: some View {
-        ShopView()
+        ContentView().previewDevice("iPhone 13 Pro").background(.gray)
     }
 }
+
+//struct ShopView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ShopView()
+//    }
+//}
