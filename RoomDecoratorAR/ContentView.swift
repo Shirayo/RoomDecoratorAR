@@ -9,8 +9,53 @@ import SwiftUI
 import RealityKit
 
 struct ContentView : View {
+    
+    @State private var isMenuOpen: Bool = false
+    
     var body: some View {
-        return ARViewContainer().edgesIgnoringSafeArea(.all)
+        ZStack(alignment: .bottom) {
+            ARViewContainer().edgesIgnoringSafeArea(.all)
+            HStack(alignment: .center) {
+                Spacer()
+                Button {
+                    print("show aletsheet to delee all objects")
+                } label: {
+                    Image("controls")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.white)
+
+                }
+                Spacer()
+                Button {
+                    print("show sheet with tab bar")
+                    isMenuOpen = true
+                } label: {
+                    Image("plus")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.white)
+
+                }
+                Spacer()
+                Button {
+                    print("take a screenshot")
+                } label: {
+                    Image("photo-camera")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.white)
+                }
+                Spacer()
+
+            }.padding(.bottom, 20)
+                .sheet(isPresented: $isMenuOpen) {
+                    
+                } content: {
+                    TabBarView()
+                }
+
+        }
     }
 }
 
@@ -37,7 +82,7 @@ struct ARViewContainer: UIViewRepresentable {
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().previewDevice("iPhone 13 Pro").background(.gray)
     }
 }
 #endif
