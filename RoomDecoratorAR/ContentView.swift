@@ -10,8 +10,12 @@ import RealityKit
 import ARKit
 import Combine
 
+struct ARVariables{
+  static var arView: ARView!
+}
+
 struct ContentView : View {
-        
+    
 //    @State private var screenHeight: CGFloat = 0 //UIScreen.screenHeight
     @State var modelToPresent: Model?
     @State var isModelLoading: Bool = false
@@ -87,6 +91,12 @@ struct ContentView : View {
                     Spacer()
                     Button {
                         print("take a screenshot")
+                        ARVariables.arView.snapshot(saveToHDR: false) { (image) in
+                            // Compress the image
+                            let compressedImage = UIImage(data: (image?.pngData())!)
+                            // Save in the photo album
+                            UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
+                        }
                     } label: {
                         Image("photo-camera")
                             .resizable()
@@ -164,7 +174,7 @@ struct ARViewContainer: UIViewRepresentable {
     
     func makeUIView(context: Context) -> ARView {
         
-        let arView = CustomARView(frame: .zero)
+        ARVariables.arView = CustomARView(frame: .zero)
         
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal, .vertical]
@@ -172,18 +182,18 @@ struct ARViewContainer: UIViewRepresentable {
         if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) {
             config.sceneReconstruction = .mesh
         }
-        arView.session.run(config)
+        ARVariables.arView.session.run(config)
         
         let coachingOverlay = ARCoachingOverlayView()
         coachingOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        coachingOverlay.session = arView.session
+        coachingOverlay.session = ARVariables.arView.session
         coachingOverlay.goal = .horizontalPlane
-        arView.addSubview(coachingOverlay)
+        ARVariables.arView.addSubview(coachingOverlay)
         
         
 //        arView.debugOptions = [.showFeaturePoints]
 
-        return arView
+        return ARVariables.arView
         
     }
     
