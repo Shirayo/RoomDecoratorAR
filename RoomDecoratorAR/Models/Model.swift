@@ -10,18 +10,15 @@ import Combine
 import RealityKit
 
 class Model {
-    var name: String
     var Entity: ModelEntity?
     
     private var cancellable = Set<AnyCancellable>()
     
     init(entity: ModelEntity) {
-        self.name = "test"
         self.Entity = entity
     }
     
     init(modelName: String) {
-        self.name = modelName
         let fileName = modelName + ".usdz"
         ModelEntity.loadModelAsync(named: fileName).sink { completion in
             switch completion {

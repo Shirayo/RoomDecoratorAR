@@ -11,7 +11,8 @@ struct ShopView: View {
     
     
 //    @Environment(\.presentationMode) var presentationMode
-
+    @ObservedObject var vm: ContentViewModel
+    
     var body: some View {
         VStack {
             ZStack(alignment: .topLeading) {
@@ -27,9 +28,8 @@ struct ShopView: View {
                     .padding(.top, 20)
                     .padding(.leading, 20)
             }.frame(height: 200)
-
             ScrollView(.vertical) {
-                CategotyView()
+                CategotyView(vm: vm)
             }
         }.background(.white)
     }

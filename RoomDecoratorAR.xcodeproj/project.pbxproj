@@ -15,7 +15,6 @@
 		F99CE5CF27EB014300CDF225 /* RoomDecoratorARTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5CE27EB014300CDF225 /* RoomDecoratorARTests.swift */; };
 		F99CE5D927EB014300CDF225 /* RoomDecoratorARUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5D827EB014300CDF225 /* RoomDecoratorARUITests.swift */; };
 		F99CE5DB27EB014300CDF225 /* RoomDecoratorARUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5DA27EB014300CDF225 /* RoomDecoratorARUITestsLaunchTests.swift */; };
-		F99CE5EB27EB091800CDF225 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5EA27EB091800CDF225 /* TabBarView.swift */; };
 		F99CE5ED27EB0BB100CDF225 /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5EC27EB0BB100CDF225 /* ShopView.swift */; };
 		F99CE5EF27EB0C0D00CDF225 /* FavouritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */; };
 		F99CE5F127EB143600CDF225 /* RoomItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F027EB143600CDF225 /* RoomItemsView.swift */; };
@@ -25,6 +24,11 @@
 		F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */; };
 		F9C1385D27EC55790018B9EE /* CategotyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1385C27EC55790018B9EE /* CategotyView.swift */; };
 		F9C1386327EC63290018B9EE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1386227EC63290018B9EE /* Model.swift */; };
+		F9C1386527EC6E290018B9EE /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1386427EC6E290018B9EE /* ContentViewModel.swift */; };
+		F9C1386827EC7C320018B9EE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F9C1386727EC7C320018B9EE /* Kingfisher */; };
+		F9C1386B27EC83630018B9EE /* FocusEntity in Frameworks */ = {isa = PBXBuildFile; productRef = F9C1386A27EC83630018B9EE /* FocusEntity */; };
+		F9C1386E27EC85C10018B9EE /* CustomARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1386D27EC85C10018B9EE /* CustomARView.swift */; };
+		F9C1387027EC9AC50018B9EE /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1386F27EC9AC50018B9EE /* CustomProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +60,6 @@
 		F99CE5D427EB014300CDF225 /* RoomDecoratorARUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoomDecoratorARUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F99CE5D827EB014300CDF225 /* RoomDecoratorARUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDecoratorARUITests.swift; sourceTree = "<group>"; };
 		F99CE5DA27EB014300CDF225 /* RoomDecoratorARUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDecoratorARUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		F99CE5EA27EB091800CDF225 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		F99CE5EC27EB0BB100CDF225 /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
 		F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesView.swift; sourceTree = "<group>"; };
 		F99CE5F027EB143600CDF225 /* RoomItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomItemsView.swift; sourceTree = "<group>"; };
@@ -67,6 +70,9 @@
 		F99CE5FC27EB3E2F00CDF225 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F9C1385C27EC55790018B9EE /* CategotyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategotyView.swift; sourceTree = "<group>"; };
 		F9C1386227EC63290018B9EE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		F9C1386427EC6E290018B9EE /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		F9C1386D27EC85C10018B9EE /* CustomARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomARView.swift; sourceTree = "<group>"; };
+		F9C1386F27EC9AC50018B9EE /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +80,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9C1386B27EC83630018B9EE /* FocusEntity in Frameworks */,
+				F9C1386827EC7C320018B9EE /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +125,7 @@
 		F99CE5BA27EB014200CDF225 /* RoomDecoratorAR */ = {
 			isa = PBXGroup;
 			children = (
+				F9C1386C27EC85AE0018B9EE /* Custom Components */,
 				F99CE5FC27EB3E2F00CDF225 /* Info.plist */,
 				F99CE5F927EB371400CDF225 /* Utils */,
 				F99CE5F427EB2ACE00CDF225 /* Extensions */,
@@ -162,7 +171,6 @@
 			children = (
 				F9C1385B27EC555A0018B9EE /* ShopView */,
 				F99CE5F227EB1D8700CDF225 /* BottomSheetVIew.swift */,
-				F99CE5EA27EB091800CDF225 /* TabBarView.swift */,
 				F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */,
 				F99CE5F027EB143600CDF225 /* RoomItemsView.swift */,
 			);
@@ -180,6 +188,7 @@
 		F99CE5E927EB08EE00CDF225 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				F9C1386427EC6E290018B9EE /* ContentViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -210,6 +219,15 @@
 			path = ShopView;
 			sourceTree = "<group>";
 		};
+		F9C1386C27EC85AE0018B9EE /* Custom Components */ = {
+			isa = PBXGroup;
+			children = (
+				F9C1386D27EC85C10018B9EE /* CustomARView.swift */,
+				F9C1386F27EC9AC50018B9EE /* CustomProgressView.swift */,
+			);
+			path = "Custom Components";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -226,6 +244,10 @@
 			dependencies = (
 			);
 			name = RoomDecoratorAR;
+			packageProductDependencies = (
+				F9C1386727EC7C320018B9EE /* Kingfisher */,
+				F9C1386A27EC83630018B9EE /* FocusEntity */,
+			);
 			productName = RoomDecoratorAR;
 			productReference = F99CE5B827EB014200CDF225 /* RoomDecoratorAR.app */;
 			productType = "com.apple.product-type.application";
@@ -298,6 +320,10 @@
 				Base,
 			);
 			mainGroup = F99CE5AF27EB014200CDF225;
+			packageReferences = (
+				F9C1386627EC7C320018B9EE /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				F9C1386927EC83630018B9EE /* XCRemoteSwiftPackageReference "FocusEntity" */,
+			);
 			productRefGroup = F99CE5B927EB014200CDF225 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -347,11 +373,13 @@
 				F99CE5F827EB370600CDF225 /* ViewExtension.swift in Sources */,
 				F99CE5BC27EB014200CDF225 /* AppDelegate.swift in Sources */,
 				F9C1386327EC63290018B9EE /* Model.swift in Sources */,
-				F99CE5EB27EB091800CDF225 /* TabBarView.swift in Sources */,
 				F99CE5ED27EB0BB100CDF225 /* ShopView.swift in Sources */,
+				F9C1387027EC9AC50018B9EE /* CustomProgressView.swift in Sources */,
 				F9C1385D27EC55790018B9EE /* CategotyView.swift in Sources */,
+				F9C1386527EC6E290018B9EE /* ContentViewModel.swift in Sources */,
 				F99CE5EF27EB0C0D00CDF225 /* FavouritesView.swift in Sources */,
 				F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */,
+				F9C1386E27EC85C10018B9EE /* CustomARView.swift in Sources */,
 				F99CE5C027EB014200CDF225 /* Experience.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -687,6 +715,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F9C1386627EC7C320018B9EE /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		F9C1386927EC83630018B9EE /* XCRemoteSwiftPackageReference "FocusEntity" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maxxfrazer/FocusEntity";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F9C1386727EC7C320018B9EE /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9C1386627EC7C320018B9EE /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		F9C1386A27EC83630018B9EE /* FocusEntity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9C1386927EC83630018B9EE /* XCRemoteSwiftPackageReference "FocusEntity" */;
+			productName = FocusEntity;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F99CE5B027EB014200CDF225 /* Project object */;
 }
