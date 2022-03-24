@@ -23,6 +23,8 @@
 		F99CE5F627EB2AE700CDF225 /* UIScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F527EB2AE700CDF225 /* UIScreenExtension.swift */; };
 		F99CE5F827EB370600CDF225 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F727EB370600CDF225 /* ViewExtension.swift */; };
 		F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */; };
+		F9C1385D27EC55790018B9EE /* CategotyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1385C27EC55790018B9EE /* CategotyView.swift */; };
+		F9C1386327EC63290018B9EE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1386227EC63290018B9EE /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,9 @@
 		F99CE5F527EB2AE700CDF225 /* UIScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreenExtension.swift; sourceTree = "<group>"; };
 		F99CE5F727EB370600CDF225 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		F99CE5FC27EB3E2F00CDF225 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F9C1385C27EC55790018B9EE /* CategotyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategotyView.swift; sourceTree = "<group>"; };
+		F9C1386227EC63290018B9EE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +117,7 @@
 		F99CE5BA27EB014200CDF225 /* RoomDecoratorAR */ = {
 			isa = PBXGroup;
 			children = (
+				F99CE5FC27EB3E2F00CDF225 /* Info.plist */,
 				F99CE5F927EB371400CDF225 /* Utils */,
 				F99CE5F427EB2ACE00CDF225 /* Extensions */,
 				F99CE5E827EB08DC00CDF225 /* Models */,
@@ -154,11 +160,11 @@
 		F99CE5E727EB08D600CDF225 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F9C1385B27EC555A0018B9EE /* ShopView */,
+				F99CE5F227EB1D8700CDF225 /* BottomSheetVIew.swift */,
 				F99CE5EA27EB091800CDF225 /* TabBarView.swift */,
-				F99CE5EC27EB0BB100CDF225 /* ShopView.swift */,
 				F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */,
 				F99CE5F027EB143600CDF225 /* RoomItemsView.swift */,
-				F99CE5F227EB1D8700CDF225 /* BottomSheetVIew.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -166,6 +172,7 @@
 		F99CE5E827EB08DC00CDF225 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F9C1386227EC63290018B9EE /* Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +199,15 @@
 				F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		F9C1385B27EC555A0018B9EE /* ShopView */ = {
+			isa = PBXGroup;
+			children = (
+				F99CE5EC27EB0BB100CDF225 /* ShopView.swift */,
+				F9C1385C27EC55790018B9EE /* CategotyView.swift */,
+			);
+			path = ShopView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,8 +346,10 @@
 				F99CE5F127EB143600CDF225 /* RoomItemsView.swift in Sources */,
 				F99CE5F827EB370600CDF225 /* ViewExtension.swift in Sources */,
 				F99CE5BC27EB014200CDF225 /* AppDelegate.swift in Sources */,
+				F9C1386327EC63290018B9EE /* Model.swift in Sources */,
 				F99CE5EB27EB091800CDF225 /* TabBarView.swift in Sources */,
 				F99CE5ED27EB0BB100CDF225 /* ShopView.swift in Sources */,
+				F9C1385D27EC55790018B9EE /* CategotyView.swift in Sources */,
 				F99CE5EF27EB0C0D00CDF225 /* FavouritesView.swift in Sources */,
 				F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */,
 				F99CE5C027EB014200CDF225 /* Experience.rcproject in Sources */,
@@ -498,6 +516,7 @@
 				DEVELOPMENT_TEAM = DB6K9AT64H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RoomDecoratorAR/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -530,6 +549,7 @@
 				DEVELOPMENT_TEAM = DB6K9AT64H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RoomDecoratorAR/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

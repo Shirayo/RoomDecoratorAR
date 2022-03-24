@@ -8,22 +8,30 @@
 import SwiftUI
 
 struct ShopView: View {
+    
+    
+//    @Environment(\.presentationMode) var presentationMode
+
     var body: some View {
         VStack {
             ZStack(alignment: .topLeading) {
                 Image("apartments")
                     .resizable()
                     .scaledToFill()
+                    .frame(height: 200)
+                    .clipped()
                 Color.black.opacity(0.25)
                 Text("Good morning")
                     .foregroundColor(.white)
                     .font(.system(size: 32, weight: .semibold))
-                    .padding(.top, 30)
+                    .padding(.top, 20)
                     .padding(.leading, 20)
             }.frame(height: 200)
-            Spacer()
+
+            ScrollView(.vertical) {
+                CategotyView()
+            }
         }.background(.white)
-        
     }
 }
 

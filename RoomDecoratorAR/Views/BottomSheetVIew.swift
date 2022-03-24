@@ -27,10 +27,9 @@ struct BottomSheetVIew: View {
                         if value.translation.height > 0 {
                             translationY = value.translation.height
                         }
-                        
                     })
                     .onEnded({ value in
-                        if value.translation.height > 200 {
+                        if value.translation.height > 150 {
                             translationY = proxy.size.height
                         } else {
                             translationY = 0
