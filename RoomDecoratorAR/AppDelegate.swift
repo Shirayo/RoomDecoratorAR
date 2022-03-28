@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        FirebaseApp.configure()
+        Auth.auth().signInAnonymously { authResult, error in
+            guard let user = authResult?.user else {
+                print("Firebase: Failed Anonymous Authentication")
+                return
+            }
+            let uid = user.uid
+            print("Firebase: Anonymous user authentication with uid: \(uid)")
+        }
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView()
 
