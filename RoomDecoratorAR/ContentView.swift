@@ -19,7 +19,7 @@ struct ContentView : View {
 //    @State private var screenHeight: CGFloat = 0 //UIScreen.screenHeight
     @State var modelToPresent: Model?
     @State var isModelLoading: Bool = false
-    @State var progress: Double = 0
+    @State var progress: Double = 1.0
     @State var observation: NSKeyValueObservation?
     @ObservedObject var contentViewModel = ContentViewModel()
      
@@ -80,7 +80,9 @@ struct ContentView : View {
                     Spacer()
                     Button {
                         print("show sheet with tab bar")
-                        contentViewModel.transitionY = 0
+                        withAnimation {
+                            contentViewModel.transitionY = 0
+                        }
                     } label: {
                         Image("plus")
                             .resizable()
@@ -200,7 +202,7 @@ struct ARViewContainer: UIViewRepresentable {
     func updateUIView(_ uiView: ARView, context: Context) {
         if let model = modelToPresent {
             if let modelEntity = model.Entity {
-                let anchorEntity = AnchorEntity(plane: .any)
+                let anchorEntity = AnchorEntity()//(plane: .any)
                 anchorEntity.addChild(modelEntity)
                 uiView.scene.addAnchor(anchorEntity.clone(recursive: true))
             } else {
