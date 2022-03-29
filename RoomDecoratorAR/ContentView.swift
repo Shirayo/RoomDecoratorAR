@@ -20,7 +20,6 @@ struct ContentView : View {
     @State var modelToPresent: ModelEntity?
     @State var isModelLoading: Bool = false
     @State var progress: Double = 1.0
-    @State var observation: NSKeyValueObservation?
     @State var isSheetOpened = false
     @ObservedObject var contentViewModel = ContentViewModel()
      
@@ -51,27 +50,10 @@ struct ContentView : View {
                             }
                         }
                         print(fileUrl.path)
+                    } loadProgress: { progress in
+                        self.progress = progress
+                        print("LOADING: \(progress)")
                     }
-//                    if let url = URL(string: contentViewModel.selectedModel?.name.) {
-//                        contentViewModel.isPlacementEnabled = false
-//                        loadFileAsync(url: url) { localURL, error in
-//                            guard let url = localURL else {
-//                                return
-//                            }
-//                            DispatchQueue.main.async {
-//                                var cancellable: AnyCancellable? = nil
-//                                cancellable = ModelEntity.loadModelAsync(contentsOf: url).sink { completion in
-//                                    cancellable?.cancel()
-//                                } receiveValue: { entity in
-//                                    modelToPresent = entity
-//                                    modelToPresent?.scale *= contentViewModel.selectedModel?.scaleCompensation
-//                                    cancellable?.cancel()
-//                                }
-//                            }
-//                            print(url.path)
-//                        }
-//                    }
-
                 } label: {
                     ZStack {
                         Color.black.opacity(0.5).frame(width: 150, height: 50, alignment: .center)
@@ -147,7 +129,7 @@ struct ContentView : View {
             request.httpMethod = "GET"
             let task = session.dataTask(with: request, completionHandler: {
                 data, response, error in
-                observation?.invalidate()
+//                observation?.invalidate()
                 if error == nil
                 {
                     if let response = response as? HTTPURLResponse
@@ -177,10 +159,10 @@ struct ContentView : View {
                     completion(destinationUrl, error)
                 }
             })
-            observation = task.progress.observe(\.fractionCompleted, changeHandler: { progress, _ in
-                print(progress.fractionCompleted)
-                self.progress = progress.fractionCompleted
-            })
+//            observation = task.progress.observe(\.fractionCompleted, changeHandler: { progress, _ in
+//                print(progress.fractionCompleted)
+//                self.progress = progress.fractionCompleted
+//            })
             task.resume()
         }
     }

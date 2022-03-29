@@ -7,11 +7,12 @@
 
 import Foundation
 import Firebase
+import SwiftUI
 
-class FirebaseStorageHelper {
+class FirebaseStorageHelper: ObservableObject {
     static private let cloudStorage = Storage.storage()
     
-    class func asyncDownloadToFilesystem(relativePath: String, completion: @escaping(_ fileUrl: URL) -> Void) {
+    class func asyncDownloadToFilesystem(relativePath: String, completion: @escaping(_ fileUrl: URL) -> Void, loadProgress: @escaping (Double) -> Void) {
         let docsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
         let fileUrl = docsUrl.appendingPathComponent(relativePath)
@@ -22,13 +23,23 @@ class FirebaseStorageHelper {
         } else {
             let storageRef = cloudStorage.reference(withPath: relativePath)
             
-            storageRef.write(toFile: fileUrl) { url, error in
+            let task = storageRef.write(toFile: fileUrl) { url, error in
                 guard let localUrl = url else {
                     print("Firebase storage: Error downloading file with path: \(relativePath)")
                     return
                 }
                 completion(localUrl)
-            }.resume()
+            }
+            task.observe(.progress) { snapshot in
+                // Download reported progress
+                let progress = Double(snapshot.progress!.completedUnitCount)
+                  / Double(snapshot.progress!.totalUnitCount)
+                print("DEBUG: \(progress)")
+                loadProgress(progress)
+//                print(progress)
+                // Update the progress indicator
+              }
+            task.resume()
         }
     }
 }
