@@ -29,7 +29,7 @@ struct ShopView: View {
                     .padding(.leading, 20)
             }.frame(height: 200)
             ScrollView(.vertical) {
-                CategotyView(vm: vm)
+                CategoriesView(vm: vm)
             }
         }.background(.white)
     }

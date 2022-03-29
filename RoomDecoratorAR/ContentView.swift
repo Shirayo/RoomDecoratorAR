@@ -17,10 +17,11 @@ struct ARVariables{
 struct ContentView : View {
     
 //    @State private var screenHeight: CGFloat = 0 //UIScreen.screenHeight
-    @State var modelToPresent: Model?
+    @State var modelToPresent: ModelEntity?
     @State var isModelLoading: Bool = false
     @State var progress: Double = 1.0
     @State var observation: NSKeyValueObservation?
+    @State var isSheetOpened = false
     @ObservedObject var contentViewModel = ContentViewModel()
      
     var body: some View {
@@ -37,24 +38,39 @@ struct ContentView : View {
             
             if contentViewModel.isPlacementEnabled {
                 Button {
-                    if let url = URL(string: contentViewModel.selectedModel!) {
-                        contentViewModel.isPlacementEnabled = false
-                        loadFileAsync(url: url) { localURL, error in
-                            guard let url = localURL else {
-                                return
+                    contentViewModel.isPlacementEnabled = false
+                    FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "models/\(contentViewModel.selectedModel!.name).usdz") { fileUrl in
+                        DispatchQueue.main.async {
+                            var cancellable: AnyCancellable? = nil
+                            cancellable = ModelEntity.loadModelAsync(contentsOf: fileUrl).sink { completion in
+                                cancellable?.cancel()
+                            } receiveValue: { entity in
+                                modelToPresent = entity
+                                modelToPresent?.scale *= contentViewModel.selectedModel!.scaleCompensation
+                                cancellable?.cancel()
                             }
-                            DispatchQueue.main.async {
-                                var cancellable: AnyCancellable? = nil
-                                cancellable = ModelEntity.loadModelAsync(contentsOf: url).sink { completion in
-                                    cancellable?.cancel()
-                                } receiveValue: { entity in
-                                    modelToPresent = .init(entity: entity)
-                                    cancellable?.cancel()
-                                }
-                            }
-                            print(url.path)
                         }
+                        print(fileUrl.path)
                     }
+//                    if let url = URL(string: contentViewModel.selectedModel?.name.) {
+//                        contentViewModel.isPlacementEnabled = false
+//                        loadFileAsync(url: url) { localURL, error in
+//                            guard let url = localURL else {
+//                                return
+//                            }
+//                            DispatchQueue.main.async {
+//                                var cancellable: AnyCancellable? = nil
+//                                cancellable = ModelEntity.loadModelAsync(contentsOf: url).sink { completion in
+//                                    cancellable?.cancel()
+//                                } receiveValue: { entity in
+//                                    modelToPresent = entity
+//                                    modelToPresent?.scale *= contentViewModel.selectedModel?.scaleCompensation
+//                                    cancellable?.cancel()
+//                                }
+//                            }
+//                            print(url.path)
+//                        }
+//                    }
 
                 } label: {
                     ZStack {
@@ -80,9 +96,8 @@ struct ContentView : View {
                     Spacer()
                     Button {
                         print("show sheet with tab bar")
-                        withAnimation {
-                            contentViewModel.transitionY = 0
-                        }
+                        modelToPresent = nil
+                        isSheetOpened = true
                     } label: {
                         Image("plus")
                             .resizable()
@@ -108,8 +123,10 @@ struct ContentView : View {
                     Spacer()
 
                 }.padding(.bottom, 20)
+                    .sheet(isPresented: $isSheetOpened) {
+                        SheetView(vm: contentViewModel)
+                    }
             }
-            BottomSheetVIew(vm: contentViewModel)
         }
     }
     
@@ -172,7 +189,7 @@ struct ContentView : View {
 
 struct ARViewContainer: UIViewRepresentable {
     
-    @Binding var modelToPresent: Model?
+    @Binding var modelToPresent: ModelEntity?
     
     func makeUIView(context: Context) -> ARView {
         
@@ -200,17 +217,15 @@ struct ARViewContainer: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: ARView, context: Context) {
-        if let model = modelToPresent {
-            if let modelEntity = model.Entity {
-                let anchorEntity = AnchorEntity()//(plane: .any)
-                anchorEntity.addChild(modelEntity)
-                uiView.scene.addAnchor(anchorEntity.clone(recursive: true))
-            } else {
-                print("ERROR TO LOAD MODEL")
-                //error handling...
-            }
+        if let modelEntity = modelToPresent {
+            let anchorEntity = AnchorEntity(plane: .any)
+            anchorEntity.addChild(modelEntity)
+            uiView.scene.addAnchor(anchorEntity.clone(recursive: true))
+            //put model to nil maybe
+        } else {
+            print("ERROR TO LOAD MODEL OR MODEL DID NOT EXIST")
+            //error handling...
         }
-        
     }
     
 }

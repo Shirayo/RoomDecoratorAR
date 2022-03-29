@@ -7,32 +7,56 @@
 
 import Foundation
 import Combine
+import SwiftUI
 import RealityKit
 
-class Model {
-    var Entity: ModelEntity?
+enum ModelCategory: String, CaseIterable {
+    case tables
+    case chairs
+    case sofas
+    case lights
+    
+    var label: String {
+        get {
+            switch self {
+            case .tables:
+                return "Tables"
+            case .chairs:
+                return "Chairs"
+            case .sofas:
+                return "Sofas"
+            case .lights:
+                return "Lights"
+            }
+        }
+    }
+}
+
+
+class Model: ObservableObject, Identifiable {
+//    var entity: ModelEntity?
+    var id: String = UUID().uuidString
+    var name: String
+    var category: ModelCategory
+    @Published var thumbnail: UIImage
+    var scaleCompensation: Float
     
     private var cancellable = Set<AnyCancellable>()
     
-    init(entity: ModelEntity) {
-        self.Entity = entity
-    }
-    
-    init(modelName: String) {
-        let fileName = modelName + ".usdz"
-        ModelEntity.loadModelAsync(named: fileName).sink { completion in
-            switch completion {
-            case .finished:
-                print("finished")
-            case .failure(let error):
-                print("oopsie doopsie: \(error)")
-            }
-        } receiveValue: { modelEntity in
-            self.Entity = modelEntity
-            print("DEBUG: successfully loaded modelEntity for modelName")
-        }.store(in: &cancellable)
-
+    init(name: String, category: ModelCategory, scaleCompensation: Float = 1.0 ) {
+        self.name = name
+        self.category = category
+        self .thumbnail = UIImage(named: name) ?? UIImage(systemName: "photo")!
+        self.scaleCompensation = scaleCompensation
         
+        FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "thumbnails/\(self.name).jpeg") { fileUrl in
+            do {
+                let imageData = try Data(contentsOf: fileUrl)
+                self.thumbnail = UIImage(data: imageData) ?? self.thumbnail
+            } catch {
+                
+            }
+        }
     }
     
 }

@@ -14,23 +14,9 @@ import UIKit
 class ContentViewModel: ObservableObject {
     
     @Published var isPlacementEnabled: Bool = true
-    @Published var selectedModel: String? = nil
-    @Published var transitionY: CGFloat = 0
+    @Published var selectedModel: Model? = nil
     
-    
-    private var isModelSelected: AnyPublisher<CGFloat, Never> {
-        $selectedModel
-            .map { input in
-                if input != nil {
-                    return UIScreen.screenHeight
-                } else {
-                    return 0
-                }
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private var isModelSelected2: AnyPublisher<Bool, Never> {
+    private var isModelSelected: AnyPublisher<Bool, Never> {
         $selectedModel
             .map { input in
                 return input != nil
@@ -41,9 +27,6 @@ class ContentViewModel: ObservableObject {
     
     init() {
         isModelSelected
-            .receive(on: RunLoop.main)
-            .assign(to: &$transitionY)
-        isModelSelected2
             .receive(on: RunLoop.main)
             .assign(to: &$isPlacementEnabled)
     }
