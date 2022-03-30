@@ -38,7 +38,7 @@ class Model: ObservableObject, Identifiable {
     var id: String = UUID().uuidString
     var name: String
     var category: ModelCategory
-    @Published var thumbnail: UIImage
+    @Published var thumbnail: UIImage?
     var scaleCompensation: Float
     
     private var cancellable = Set<AnyCancellable>()
@@ -46,7 +46,7 @@ class Model: ObservableObject, Identifiable {
     init(name: String, category: ModelCategory, scaleCompensation: Float = 1.0 ) {
         self.name = name
         self.category = category
-        self .thumbnail = UIImage(named: name) ?? UIImage(systemName: "photo")!
+        self .thumbnail = UIImage(named: name) //?? UIImage(systemName: "bag")!
         self.scaleCompensation = scaleCompensation
         
         let modelName = self.name.replacingOccurrences(of: " ", with: "_")

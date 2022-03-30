@@ -12,7 +12,7 @@ import SwiftUI
 class FirebaseStorageHelper: ObservableObject {
     static private let cloudStorage = Storage.storage()
     
-    class func asyncDownloadToFilesystem(relativePath: String, completion: @escaping(_ fileUrl: URL) -> Void, loadProgress: @escaping (Double) -> Void) {
+    class func asyncDownloadToFilesystem(relativePath: String, completion: @escaping(_ fileUrl: URL) -> Void, loadProgress: @escaping (Double) -> ()) {
         let docsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
         let fileUrl = docsUrl.appendingPathComponent(relativePath)
@@ -34,10 +34,7 @@ class FirebaseStorageHelper: ObservableObject {
                 // Download reported progress
                 let progress = Double(snapshot.progress!.completedUnitCount)
                   / Double(snapshot.progress!.totalUnitCount)
-                print("DEBUG: \(progress), \(Double(snapshot.progress!.totalUnitCount))")
                 loadProgress(progress)
-//                print(progress)
-                // Update the progress indicator
               }
             task.resume()
         }

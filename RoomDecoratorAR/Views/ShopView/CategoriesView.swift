@@ -22,12 +22,17 @@ struct CategoriesView: View {
         ScrollView(.vertical, showsIndicators: false) {
             ForEach(ModelCategory.allCases, id: \.self) { category in
                 if let modelsByCategory = categoriesViewModel.models.filter({ $0.category == category}) {
-                    VStack {
-                        Text("category")
+                    VStack(alignment: .leading) {
+                        Text(category.label)
+                            .font(.system(size: 18, weight: .bold))
+                            .padding(.leading)
+                            .padding(.top)
                         ScrollView(.horizontal, showsIndicators: false) {
-                            ForEach(modelsByCategory, id: \.name) { model in
-                                itemButton(model: model, vm: vm)
-                            }
+                            HStack(spacing: 16) {
+                                ForEach(modelsByCategory, id: \.name) { model in
+                                    itemButton(model: model, vm: vm)
+                                }
+                            }.padding(.horizontal)
                         }
                     }
                 }
@@ -48,19 +53,34 @@ struct itemButton: View {
             vm.selectedModel = model
             dismiss()
         } label: {
-            VStack{
-                Image(uiImage: model.thumbnail)
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .background(.red)
+            VStack(alignment: .leading) {
+                ZStack {
+                    Color.gray.opacity(0.5).frame(width: 120, height: 120, alignment: .center).cornerRadius(12)
+                    if let thumbnail = model.thumbnail  {
+                        Image(uiImage: thumbnail)
+                            .resizable()
+                            .frame(width: 118, height: 118)
+                            .cornerRadius(12)
+                    } else {
+                        Spacer().frame(width: 118, height: 118)
+                            .background(.white)
+                    }
+                   
+                }
                 Text(model.name)
-            }
+                    .font(.system(size: 10))
+                    .foregroundColor(.black)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                    
+            }.frame(width: 120, height: 180)
         }
     }
 }
 
 //struct CategotyView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        CategotyView(.init())
+//        CategoriesView(vm: ContentViewModel())
+//            .environmentObject(ContentViewModel())
 //    }
 //}
