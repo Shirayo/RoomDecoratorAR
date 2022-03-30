@@ -49,7 +49,8 @@ class Model: ObservableObject, Identifiable {
         self .thumbnail = UIImage(named: name) ?? UIImage(systemName: "photo")!
         self.scaleCompensation = scaleCompensation
         
-        FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "thumbnails/\(self.name).jpeg") { fileUrl in
+        let modelName = self.name.replacingOccurrences(of: " ", with: "_")
+        FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "thumbnails/\(modelName).png") { fileUrl in
             do {
                 let imageData = try Data(contentsOf: fileUrl)
                 self.thumbnail = UIImage(data: imageData) ?? self.thumbnail

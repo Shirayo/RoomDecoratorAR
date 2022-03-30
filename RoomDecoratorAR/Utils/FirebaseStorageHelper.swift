@@ -34,7 +34,7 @@ class FirebaseStorageHelper: ObservableObject {
                 // Download reported progress
                 let progress = Double(snapshot.progress!.completedUnitCount)
                   / Double(snapshot.progress!.totalUnitCount)
-                print("DEBUG: \(progress)")
+                print("DEBUG: \(progress), \(Double(snapshot.progress!.totalUnitCount))")
                 loadProgress(progress)
 //                print(progress)
                 // Update the progress indicator

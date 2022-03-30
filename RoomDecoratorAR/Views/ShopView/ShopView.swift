@@ -35,14 +35,14 @@ struct ShopView: View {
     }
 }
 
-struct ContentView_Previews2 : PreviewProvider {
-    static var previews: some View {
-        ContentView().previewDevice("iPhone 13 Pro").background(.gray)
-    }
-}
-
-//struct ShopView_Previews: PreviewProvider {
+//struct ContentView_Previews2 : PreviewProvider {
 //    static var previews: some View {
-//        ShopView()
+//        ContentView().previewDevice("iPhone 13 Pro").background(.gray)
 //    }
 //}
+
+struct ShopView_Previews: PreviewProvider {
+    static var previews: some View {
+        ShopView(vm: .init())
+    }
+}

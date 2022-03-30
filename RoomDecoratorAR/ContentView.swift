@@ -19,7 +19,21 @@ struct ContentView : View {
 //    @State private var screenHeight: CGFloat = 0 //UIScreen.screenHeight
     @State var modelToPresent: ModelEntity?
     @State var isModelLoading: Bool = false
-    @State var progress: Double = 1.0
+    @State var progress: Double = 0.0
+    @State var currentSelectedIndex = 0.0 {
+        didSet {
+            print("===>current", currentSelectedIndex)
+            print("===>previous", progress)
+        }
+        willSet {
+            if progress < self.currentSelectedIndex {
+                progress = self.currentSelectedIndex
+            }
+            if currentSelectedIndex == 1.0 {
+                progress = 0.0
+            }
+        }
+    }
     @State var isSheetOpened = false
     @ObservedObject var contentViewModel = ContentViewModel()
      
@@ -38,7 +52,8 @@ struct ContentView : View {
             if contentViewModel.isPlacementEnabled {
                 Button {
                     contentViewModel.isPlacementEnabled = false
-                    FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "models/\(contentViewModel.selectedModel!.name).usdz") { fileUrl in
+                    let modelName = contentViewModel.selectedModel!.name.replacingOccurrences(of: " ", with: "_")
+                    FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "models/\(modelName).usdz") { fileUrl in
                         DispatchQueue.main.async {
                             var cancellable: AnyCancellable? = nil
                             cancellable = ModelEntity.loadModelAsync(contentsOf: fileUrl).sink { completion in
@@ -51,8 +66,8 @@ struct ContentView : View {
                         }
                         print(fileUrl.path)
                     } loadProgress: { progress in
-                        self.progress = progress
-                        print("LOADING: \(progress)")
+                        self.currentSelectedIndex = progress
+                        print("LOADING: \(self.progress)")
                     }
                 } label: {
                     ZStack {
@@ -200,7 +215,7 @@ struct ARViewContainer: UIViewRepresentable {
     
     func updateUIView(_ uiView: ARView, context: Context) {
         if let modelEntity = modelToPresent {
-            let anchorEntity = AnchorEntity(plane: .any)
+            let anchorEntity = AnchorEntity()//(plane: .any)
             anchorEntity.addChild(modelEntity)
             uiView.scene.addAnchor(anchorEntity.clone(recursive: true))
             //put model to nil maybe
