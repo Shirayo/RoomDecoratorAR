@@ -12,9 +12,19 @@ class CategoriesViewModel: ObservableObject {
     @Published var models = [Model]()
     
     private let db = Firestore.firestore()
+    var selectedFilter: String?
+    var selectedField: String?
     
-    func fetchData(category: String) {
-        db.collection("models").whereField("category", isEqualTo: category).addSnapshotListener { (querySnapshot, error) in
+    func fetchData(category: String?, brand: String?) {
+        if category != nil {
+            selectedField = "category"
+            selectedFilter = category
+        }
+        if brand != nil {
+            selectedField = "brand"
+            selectedFilter = brand
+        }
+        db.collection("models").whereField(selectedField!, isEqualTo: selectedFilter!).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Firestore: no documents")
                 return

@@ -10,7 +10,6 @@ import SwiftUI
 struct ShopView: View {
     
     
-//    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var vm: ContentViewModel
     
     var body: some View {
@@ -32,15 +31,13 @@ struct ShopView: View {
                 ScrollView(.vertical) {
                     VStack(alignment: .leading) {
                         Text("Shop by category")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.system(size: 20, weight: .medium))
                             .padding(.leading)
-                            .padding(.top)
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
                                 ForEach(Categories.allCases, id: \.self) { category in
                                     NavigationLink {
-                                        CategoriesView(vm: vm, category: category.rawValue)
-//                                        SelectedCategoryView()
+                                        CategoriesView(vm: vm, category: category.label)
                                     } label: {
                                         VStack {
                                             Image(category.label)
@@ -56,24 +53,29 @@ struct ShopView: View {
                                     
                                 }
                             }.padding(.horizontal)
-                        }
+                        }.padding(.top, 0)
                     }
                     VStack(alignment: .leading) {
                         Text("Shop by brand")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.system(size: 20, weight: .medium))
                             .padding(.leading)
-                            .padding(.top)
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
-                                ForEach(Brands.allCases, id: \.self) { category in
-                                    VStack {
-                                        Image(category.label)
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 100, height: 100)
-                                            .cornerRadius(15)
-                                        Text(category.label)
-                                            .font(.system(size: 14, weight: .semibold))
+                                ForEach(Brands.allCases, id: \.self) { brand in
+                                    NavigationLink {
+                                        CategoriesView(vm: vm, brand: brand.label)
+//                                        SelectedCategoryView()
+                                    } label: {
+                                        VStack {
+                                            Image(brand.label)
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 100, height: 100)
+                                                .cornerRadius(15)
+                                            Text(brand.label)
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .foregroundColor(.black)
+                                        }
                                     }
                                 }
                             }.padding(.horizontal)

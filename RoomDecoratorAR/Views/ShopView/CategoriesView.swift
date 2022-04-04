@@ -18,23 +18,47 @@ struct CategoriesView: View {
     @ObservedObject var vm: ContentViewModel
     @ObservedObject private var categoriesViewModel = CategoriesViewModel()
     let gridItem: GridItem = .init(.fixed(100), spacing: 4)
-    var category: String
-    
+    var category: String?
+    var brand: String?
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     var body: some View {
         GeometryReader { proxy in
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: proxy.size.width / 2 - 20, maximum: 600), spacing: -20),
-                ], spacing: 0, content: {
-                    ForEach(categoriesViewModel.models, id: \.name) { model in
-                        itemButton(model: model, vm: vm, width: proxy.size.width / 2 - 20)
+            VStack(spacing: 0) {
+                HStack(alignment: .center) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image("left-arrow")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 30, height: 30)
+                            .padding()
                     }
-                })
+                    Spacer()
+                    Text(category ?? brand ?? "nihya").font(.system(size: 24, weight: .bold))
+                    Spacer()
+                    Spacer().frame(width: 30, height: 30).padding()
+                }.frame(height: 60).border(width: 1, edges: [.bottom], color: .gray.opacity(0.5))
+                ScrollView(.vertical, showsIndicators: false) {
+                    LazyVGrid(columns: [
+                        GridItem(.adaptive(minimum: proxy.size.width / 2 - 20, maximum: 600), spacing: -20),
+                    ], spacing: 0, content: {
+                        ForEach(categoriesViewModel.models, id: \.name) { model in
+                            itemButton(model: model, vm: vm, width: proxy.size.width / 2 - 20)
+                        }
+                    })
+                }
             }
         }.onAppear() {
-            categoriesViewModel.fetchData(category: category)
-        }.navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(Categories.init(rawValue: category)!.label)
+            if let category = category {
+                categoriesViewModel.fetchData(category: category, brand: nil)
+            }
+            if let brand = brand {
+                categoriesViewModel.fetchData(category: nil, brand: brand)
+            }
+        }.navigationBarHidden(true)
+            
     }
 }
 
