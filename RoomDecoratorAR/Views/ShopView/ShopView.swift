@@ -14,47 +14,55 @@ struct ShopView: View {
     @ObservedObject var vm: ContentViewModel
     
     var body: some View {
-        VStack {
-            ZStack(alignment: .topLeading) {
-                Image("apartments")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 250)
-                    .clipped()
-                Color.black.opacity(0.25)
-                Text("Good morning")
-                    .foregroundColor(.white)
-                    .font(.system(size: 32, weight: .semibold))
-                    .padding(.top, 20)
-                    .padding(.leading, 20)
-            }.frame(height: 250)
-            ScrollView(.vertical) {
-                VStack(alignment: .leading) {
-                    Text("Shop by category")
-                        .font(.system(size: 18, weight: .bold))
-                        .padding(.leading)
-                        .padding(.top)
+        NavigationView {
+            VStack {
+                ZStack(alignment: .topLeading) {
+                    Image("apartments")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 250)
+                        .clipped()
+                    Color.black.opacity(0.25)
+                    Text("Good morning")
+                        .foregroundColor(.white)
+                        .font(.system(size: 32, weight: .semibold))
+                        .padding(.top, 20)
+                        .padding(.leading, 20)
+                }.frame(height: 250)
+                ScrollView(.vertical) {
+                    VStack(alignment: .leading) {
+                        Text("Shop by category")
+                            .font(.system(size: 18, weight: .bold))
+                            .padding(.leading)
+                            .padding(.top)
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
                                 ForEach(Categories.allCases, id: \.self) { category in
-                                    VStack {
-                                        Image(category.label)
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 100, height: 100)
-                                            .cornerRadius(15)
-                                        Text(category.label)
-                                            .font(.system(size: 14, weight: .semibold))
+                                    NavigationLink {
+                                        CategoriesView(vm: vm, category: category.rawValue)
+//                                        SelectedCategoryView()
+                                    } label: {
+                                        VStack {
+                                            Image(category.label)
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 100, height: 100)
+                                                .cornerRadius(15)
+                                            Text(category.label)
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .foregroundColor(.black)
+                                        }
                                     }
-                            }
-                        }.padding(.horizontal)
+                                    
+                                }
+                            }.padding(.horizontal)
+                        }
                     }
-                }
-                VStack(alignment: .leading) {
-                    Text("Shop by brand")
-                        .font(.system(size: 18, weight: .bold))
-                        .padding(.leading)
-                        .padding(.top)
+                    VStack(alignment: .leading) {
+                        Text("Shop by brand")
+                            .font(.system(size: 18, weight: .bold))
+                            .padding(.leading)
+                            .padding(.top)
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
                                 ForEach(Brands.allCases, id: \.self) { category in
@@ -67,14 +75,13 @@ struct ShopView: View {
                                         Text(category.label)
                                             .font(.system(size: 14, weight: .semibold))
                                     }
-                            }
-                        }.padding(.horizontal)
-                    }
+                                }
+                            }.padding(.horizontal)
+                        }
+                    }.navigationBarHidden(true)
                 }
-                
-                //CategoriesView(vm: vm)
-            }
-        }.background(.white)
+            }.background(.white)
+        }
     }
 }
 

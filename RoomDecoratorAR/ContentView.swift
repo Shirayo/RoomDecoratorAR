@@ -28,7 +28,7 @@ struct ContentView : View {
             }
         }
     }
-    @State var isSheetOpened = false
+    @State var isSheetOpened = true
     @ObservedObject var contentViewModel = ContentViewModel()
      
     var body: some View {

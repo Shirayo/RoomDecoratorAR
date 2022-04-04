@@ -13,12 +13,30 @@ class CategoriesViewModel: ObservableObject {
     
     private let db = Firestore.firestore()
     
-    func fetchData() {
-//        db.collection("models").whereField("brand", isEqualTo: "Ikea").addSnapshotListener { (querySnapshot, error) in
+    func fetchData(category: String) {
+        db.collection("models").whereField("category", isEqualTo: category).addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Firestore: no documents")
+                return
+            }
+            self.models = documents.map { (queryDocumentSnapshot) -> Model in
+                let data = queryDocumentSnapshot.data()
+                let name = data["name"] as? String ?? ""
+                let brand = data["brand"] as? String ?? ""
+                let categoryText = data["category"] as? String ?? ""
+                let category = Categories(rawValue: categoryText) ?? .sofas
+                let scaleCompensation = data["scaleCompensation"] as? Double ?? 1.0
+
+                return Model(name: name, category: category, brand: brand, scaleCompensation: Float(scaleCompensation))
+            }
+        }
+        
+//        db.collection("models").addSnapshotListener{ (querySnapshot, error) in
 //            guard let documents = querySnapshot?.documents else {
 //                print("Firestore: no documents")
 //                return
 //            }
+//
 //            self.models = documents.map { (queryDocumentSnapshot) -> Model in
 //                let data = queryDocumentSnapshot.data()
 //                let name = data["name"] as? String ?? ""
@@ -27,25 +45,8 @@ class CategoriesViewModel: ObservableObject {
 //                let scaleCompensation = data["scaleCompensation"] as? Double ?? 1.0
 //
 //                return Model(name: name, category: category, scaleCompensation: Float(scaleCompensation))
+//
 //            }
 //        }
-        
-        db.collection("models").addSnapshotListener{ (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("Firestore: no documents")
-                return
-            }
-            
-            self.models = documents.map { (queryDocumentSnapshot) -> Model in
-                let data = queryDocumentSnapshot.data()
-                let name = data["name"] as? String ?? ""
-                let categoryText = data["category"] as? String ?? ""
-                let category = Categories(rawValue: categoryText) ?? .sofas
-                let scaleCompensation = data["scaleCompensation"] as? Double ?? 1.0
-                
-                return Model(name: name, category: category, scaleCompensation: Float(scaleCompensation))
-
-            }
-        }
     }
 }
