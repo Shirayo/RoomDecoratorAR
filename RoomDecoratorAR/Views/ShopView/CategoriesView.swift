@@ -20,7 +20,7 @@ struct CategoriesView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            ForEach(ModelCategory.allCases, id: \.self) { category in
+            ForEach(Categories.allCases, id: \.self) { category in
                 if let modelsByCategory = categoriesViewModel.models.filter({ $0.category == category}) {
                     VStack(alignment: .leading) {
                         Text(category.label)

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Coffee Tables.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

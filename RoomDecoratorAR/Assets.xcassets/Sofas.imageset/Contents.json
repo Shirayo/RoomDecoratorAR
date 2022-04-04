@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "sofas.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
