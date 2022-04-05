@@ -28,7 +28,7 @@ struct ShopView: View {
                         .padding(.top, 20)
                         .padding(.leading, 20)
                 }.frame(height: 250)
-                ScrollView(.vertical) {
+                ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
                         Text("Shop by category")
                             .font(.system(size: 20, weight: .medium))
@@ -64,7 +64,6 @@ struct ShopView: View {
                                 ForEach(Brands.allCases, id: \.self) { brand in
                                     NavigationLink {
                                         CategoriesView(vm: vm, brand: brand.label)
-//                                        SelectedCategoryView()
                                     } label: {
                                         VStack {
                                             Image(brand.label)

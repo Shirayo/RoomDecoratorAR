@@ -81,8 +81,9 @@ struct itemButton: View {
                             .frame(width: width - 8, height: width - 8)
                             .cornerRadius(12)
                     } else {
-                        Spacer().frame(width: 118, height: 118)
+                        Spacer().frame(width: width - 8, height: width - 8)
                             .background(.white)
+                            .cornerRadius(12)
                     }
                    
                 }
