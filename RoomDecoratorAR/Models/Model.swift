@@ -36,9 +36,7 @@ class Model: ObservableObject, Identifiable {
             } catch {
                 
             }
-        } loadProgress: { progress in
-            
-        }
+        } loadProgress: { progress in }
     }
     
 }

@@ -44,9 +44,9 @@ struct SheetView: View {
     }
 }
 
-struct BottomSheetVIew_Previews: PreviewProvider {
-    static var previews: some View {
-        SheetView(vm: .init())
-            .background(.blue)
-    }
-}
+//struct BottomSheetVIew_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SheetView(vm: .init())
+//            .background(.blue)
+//    }
+//}

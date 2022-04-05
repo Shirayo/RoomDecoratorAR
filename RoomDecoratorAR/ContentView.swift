@@ -29,12 +29,12 @@ struct ContentView : View {
         }
     }
     @State var isSheetOpened = true
-    @ObservedObject var contentViewModel = ContentViewModel()
+    @StateObject var contentViewModel = ContentViewModel()
      
     var body: some View {
         ZStack(alignment: .bottom) {
             ARViewContainer(modelToPresent: $modelToPresent).edgesIgnoringSafeArea(.all)
-            if progress != 1.0 {
+            if progress != 1.0 || progress != 0.0 {
                 ZStack(alignment: .center) {
                     ProgressView(value: progress, total: 1.0)
                         .progressViewStyle(GaugeProgressStyle())
@@ -42,7 +42,6 @@ struct ContentView : View {
                         .contentShape(Rectangle())
                 }
             }
-            
             if contentViewModel.isPlacementEnabled {
                 Button {
                     contentViewModel.isPlacementEnabled = false
@@ -174,6 +173,7 @@ struct ARViewContainer: UIViewRepresentable {
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
         ContentView().previewDevice("iPhone 13 Pro").background(.gray)
+            .environmentObject(ContentViewModel())
     }
 }
 #endif

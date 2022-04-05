@@ -14,9 +14,9 @@ struct FavouritesView: View {
         }.background(.blue)
     }
 }
-
-struct FavouritesView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavouritesView()
-    }
-}
+//
+//struct FavouritesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FavouritesView()
+//    }
+//}

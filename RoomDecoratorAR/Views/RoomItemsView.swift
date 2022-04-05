@@ -12,9 +12,9 @@ struct RoomItemsView: View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
-
-struct RoomItemsView_Previews: PreviewProvider {
-    static var previews: some View {
-        RoomItemsView()
-    }
-}
+//
+//struct RoomItemsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RoomItemsView()
+//    }
+//}

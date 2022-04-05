@@ -17,7 +17,6 @@ struct CategoriesView: View {
     
     @ObservedObject var vm: ContentViewModel
     @ObservedObject private var categoriesViewModel = CategoriesViewModel()
-    let gridItem: GridItem = .init(.fixed(100), spacing: 4)
     var category: String?
     var brand: String?
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -101,8 +100,10 @@ struct itemButton: View {
     }
 }
 
-//struct CategotyView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CategoriesView(vm: ContentViewModel(), category: "tables")
-//    }
-//}
+struct CategotyView_Previews: PreviewProvider {
+    static var previews: some View {
+        CategoriesView(vm: ContentViewModel(), category: "tables")
+            .environmentObject(ContentViewModel())
+            .environmentObject(CategoriesViewModel())
+    }
+}

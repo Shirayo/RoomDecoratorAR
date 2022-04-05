@@ -21,6 +21,10 @@
 		84B0313127F70D1500C2F4E9 /* Brands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B0313027F70D1500C2F4E9 /* Brands.swift */; };
 		84B5128E27F30AD200A81A4B /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B5128D27F30AD200A81A4B /* CategoriesViewModel.swift */; };
 		84B5129027F31DB100A81A4B /* FirebaseStorageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B5128F27F31DB100A81A4B /* FirebaseStorageHelper.swift */; };
+		F901977927FC58AA0060AA5F /* ShopByCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F901977827FC58AA0060AA5F /* ShopByCategoryView.swift */; };
+		F901977B27FC5A670060AA5F /* ShopByBrandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F901977A27FC5A670060AA5F /* ShopByBrandView.swift */; };
+		F96E571527FC7D7300BD5DF8 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F96E571427FC7D7300BD5DF8 /* Realm */; };
+		F96E571727FC7D7300BD5DF8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F96E571627FC7D7300BD5DF8 /* RealmSwift */; };
 		F977754327FB02F4004C4E55 /* EdgeBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F977754227FB02F4004C4E55 /* EdgeBorder.swift */; };
 		F99CE5BC27EB014200CDF225 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5BB27EB014200CDF225 /* AppDelegate.swift */; };
 		F99CE5BE27EB014200CDF225 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5BD27EB014200CDF225 /* ContentView.swift */; };
@@ -69,6 +73,8 @@
 		84B0313027F70D1500C2F4E9 /* Brands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brands.swift; sourceTree = "<group>"; };
 		84B5128D27F30AD200A81A4B /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
 		84B5128F27F31DB100A81A4B /* FirebaseStorageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageHelper.swift; sourceTree = "<group>"; };
+		F901977827FC58AA0060AA5F /* ShopByCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopByCategoryView.swift; sourceTree = "<group>"; };
+		F901977A27FC5A670060AA5F /* ShopByBrandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopByBrandView.swift; sourceTree = "<group>"; };
 		F977754227FB02F4004C4E55 /* EdgeBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeBorder.swift; sourceTree = "<group>"; };
 		F99CE5B827EB014200CDF225 /* RoomDecoratorAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomDecoratorAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F99CE5BB27EB014200CDF225 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,9 +111,11 @@
 				842BC7EB27F1A11200E11C5C /* FirebaseFirestore in Frameworks */,
 				842BC7F327F1A11200E11C5C /* FirebaseStorageCombine-Community in Frameworks */,
 				842BC7E927F1A11200E11C5C /* FirebaseAuth in Frameworks */,
+				F96E571527FC7D7300BD5DF8 /* Realm in Frameworks */,
 				842BC7EF27F1A11200E11C5C /* FirebaseFirestoreSwift-Beta in Frameworks */,
 				842BC7F527F1A11200E11C5C /* FirebaseStorageSwift-Beta in Frameworks */,
 				842BC7F127F1A11200E11C5C /* FirebaseStorage in Frameworks */,
+				F96E571727FC7D7300BD5DF8 /* RealmSwift in Frameworks */,
 				842BC7ED27F1A11200E11C5C /* FirebaseFirestoreCombine-Community in Frameworks */,
 				F9C1386827EC7C320018B9EE /* Kingfisher in Frameworks */,
 			);
@@ -137,6 +145,14 @@
 				84B0313027F70D1500C2F4E9 /* Brands.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		F901977727FC58810060AA5F /* CategoriesView */ = {
+			isa = PBXGroup;
+			children = (
+				F9C1385C27EC55790018B9EE /* CategoriesView.swift */,
+			);
+			path = CategoriesView;
 			sourceTree = "<group>";
 		};
 		F99CE5AF27EB014200CDF225 = {
@@ -255,8 +271,10 @@
 		F9C1385B27EC555A0018B9EE /* ShopView */ = {
 			isa = PBXGroup;
 			children = (
+				F901977727FC58810060AA5F /* CategoriesView */,
 				F99CE5EC27EB0BB100CDF225 /* ShopView.swift */,
-				F9C1385C27EC55790018B9EE /* CategoriesView.swift */,
+				F901977827FC58AA0060AA5F /* ShopByCategoryView.swift */,
+				F901977A27FC5A670060AA5F /* ShopByBrandView.swift */,
 			);
 			path = ShopView;
 			sourceTree = "<group>";
@@ -296,6 +314,8 @@
 				842BC7F027F1A11200E11C5C /* FirebaseStorage */,
 				842BC7F227F1A11200E11C5C /* FirebaseStorageCombine-Community */,
 				842BC7F427F1A11200E11C5C /* FirebaseStorageSwift-Beta */,
+				F96E571427FC7D7300BD5DF8 /* Realm */,
+				F96E571627FC7D7300BD5DF8 /* RealmSwift */,
 			);
 			productName = RoomDecoratorAR;
 			productReference = F99CE5B827EB014200CDF225 /* RoomDecoratorAR.app */;
@@ -373,6 +393,7 @@
 				F9C1386627EC7C320018B9EE /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				F9C1386927EC83630018B9EE /* XCRemoteSwiftPackageReference "FocusEntity" */,
 				842BC7E727F1A11200E11C5C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F96E571327FC7D7300BD5DF8 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = F99CE5B927EB014200CDF225 /* Products */;
 			projectDirPath = "";
@@ -424,11 +445,13 @@
 				F99CE5F327EB1D8700CDF225 /* SheetView.swift in Sources */,
 				F99CE5F127EB143600CDF225 /* RoomItemsView.swift in Sources */,
 				F99CE5F827EB370600CDF225 /* ViewExtension.swift in Sources */,
+				F901977B27FC5A670060AA5F /* ShopByBrandView.swift in Sources */,
 				84B0312F27F70CD100C2F4E9 /* Categories.swift in Sources */,
 				F99CE5BC27EB014200CDF225 /* AppDelegate.swift in Sources */,
 				84B5128E27F30AD200A81A4B /* CategoriesViewModel.swift in Sources */,
 				F9C1386327EC63290018B9EE /* Model.swift in Sources */,
 				F99CE5ED27EB0BB100CDF225 /* ShopView.swift in Sources */,
+				F901977927FC58AA0060AA5F /* ShopByCategoryView.swift in Sources */,
 				F9C1387027EC9AC50018B9EE /* CustomProgressView.swift in Sources */,
 				84B0313127F70D1500C2F4E9 /* Brands.swift in Sources */,
 				F9C1385D27EC55790018B9EE /* CategoriesView.swift in Sources */,
@@ -789,6 +812,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		F96E571327FC7D7300BD5DF8 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		F9C1386627EC7C320018B9EE /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -842,6 +873,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 842BC7E727F1A11200E11C5C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageSwift-Beta";
+		};
+		F96E571427FC7D7300BD5DF8 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F96E571327FC7D7300BD5DF8 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		F96E571627FC7D7300BD5DF8 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F96E571327FC7D7300BD5DF8 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		F9C1386727EC7C320018B9EE /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
