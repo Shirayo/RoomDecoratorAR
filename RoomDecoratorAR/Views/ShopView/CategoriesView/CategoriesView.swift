@@ -52,8 +52,8 @@ struct CategoriesView: View {
     @ObservedObject var vm: ContentViewModel
     @StateObject private var categoriesViewModel = CategoriesViewModel()
     @EnvironmentObject var recentModelsViewModel: RecentModelsViewModel
+    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
     
-//    var cancellable = Set<AnyCancellable>()
     var category: String?
     var brand: String?
 
@@ -68,15 +68,12 @@ struct CategoriesView: View {
                         ForEach(categoriesViewModel.models, id: \.name) { model in
                             itemButton(model: model, vm: vm, width: proxy.size.width / 2 - 20)
                                 .environmentObject(recentModelsViewModel)
-//                                .environmentObject(favouritesViewModel)
+                                .environmentObject(favouritesViewModel)
                         }
-                    }).background(.yellow)
-                }.background(.green)
+                    })
+                }
             }
         }.onAppear() {
-//            recentModelsViewModel.$models.sink { group in
-//                print("heh")
-//            }//.store(in: &cancellable)
             if let category = category {
                 categoriesViewModel.fetchData(category: category, brand: nil)
             }
@@ -92,12 +89,12 @@ struct itemButton: View {
     @ObservedObject var model: Model
     @ObservedObject var vm: ContentViewModel
     @EnvironmentObject var recentModelsViewModel: RecentModelsViewModel
-//    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
+    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
 
     var width: CGFloat
     var body: some View {
         Button {
-//            vm.selectedModel = model
+            vm.selectedModel = model
             recentModelsViewModel.addModel(model)
         } label: {
             VStack(alignment: .leading) {
@@ -113,29 +110,29 @@ struct itemButton: View {
                             .background(.white)
                             .cornerRadius(12)
                     }
-//                    if !favouritesViewModel.models.items.contains(where: { $0.name == model.name }) {
-//                        Button {
-//                            favouritesViewModel.addModel(model)
-//                        } label: {
-//                            Image("heart")
-//                                .resizable()
-//                                .scaledToFill()
-//                                .foregroundColor(.black)
-//                        }
-//                        .frame(width: 20, height: 20, alignment: .topLeading)
-//                        .position(x: 20, y: 20)
-//                    } else {
-//                        Button {
-//                            favouritesViewModel.deleteModel(model)
-//                        } label: {
-//                            Image("heart")
-//                                .resizable()
-//                                .scaledToFill()
-//                                .foregroundColor(.red)
-//                        }
-//                        .frame(width: 20, height: 20, alignment: .topLeading)
-//                        .position(x: 20, y: 20)
-//                    }
+                    if !favouritesViewModel.models.items.contains(where: { $0.name == model.name }) {
+                        Button {
+                            favouritesViewModel.addModel(model)
+                        } label: {
+                            Image("heart")
+                                .resizable()
+                                .scaledToFill()
+                                .foregroundColor(.black)
+                        }
+                        .frame(width: 20, height: 20, alignment: .topLeading)
+                        .position(x: 20, y: 20)
+                    } else {
+                        Button {
+                            favouritesViewModel.deleteModel(model)
+                        } label: {
+                            Image("heart")
+                                .resizable()
+                                .scaledToFill()
+                                .foregroundColor(.red)
+                        }
+                        .frame(width: 20, height: 20, alignment: .topLeading)
+                        .position(x: 20, y: 20)
+                    }
 
                 }
                 Text(model.name)

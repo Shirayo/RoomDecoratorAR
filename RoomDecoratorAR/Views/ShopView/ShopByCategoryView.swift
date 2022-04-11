@@ -11,7 +11,7 @@ struct ShopByCategoryView: View {
     
     @ObservedObject var vm: ContentViewModel
     @EnvironmentObject var recentModelsViewModel: RecentModelsViewModel
-//    @ObservedObject var favouritesViewModel: FavouritesViewModel
+    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,6 +24,7 @@ struct ShopByCategoryView: View {
                         NavigationLink {
                             CategoriesView(vm: vm/*, recentModelsViewModel: recentModelsViewModel*/, category: category.label, brand: nil)
                                 .environmentObject(recentModelsViewModel)
+                                .environmentObject(favouritesViewModel)
                         } label: {
                             VStack {
                                 Image(category.label)

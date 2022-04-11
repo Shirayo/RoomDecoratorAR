@@ -48,8 +48,8 @@ class RealmModel: Object, ObjectKeyIdentifiable {
     @Persisted var category: String
     @Persisted var thumbnail: Data
     @Persisted var scaleCompensation: Float
-    
     @Persisted(originProperty: "items") var group: LinkingObjects<Group>
+    
 }
 
 final class Group: Object, ObjectKeyIdentifiable {

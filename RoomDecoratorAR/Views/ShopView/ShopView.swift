@@ -11,7 +11,7 @@ struct ShopView: View {
     
     @ObservedObject var vm: ContentViewModel
     @StateObject var recentModels = RecentModelsViewModel()
-//    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
+    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
 
     var body: some View {
         NavigationView {
@@ -33,12 +33,12 @@ struct ShopView: View {
                     //categories
                     ShopByCategoryView(vm: vm)
                         .environmentObject(recentModels)
-//                        .environmentObject(favouritesViewModel)
+                        .environmentObject(favouritesViewModel)
 
                     //brands
                     ShopByBrandView(vm: vm)
                         .environmentObject(recentModels)
-//                        .environmentObject(favouritesViewModel)
+                        .environmentObject(favouritesViewModel)
 
                     //recentry viewed
                     VStack(alignment: .leading) {

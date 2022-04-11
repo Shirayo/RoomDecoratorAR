@@ -11,7 +11,7 @@ import RealmSwift
 
 class FavouritesViewModel: ObservableObject {
     private(set) var localRealm: Realm?
-    @Published private(set) var models = Group()
+    @Published var models = Group()
     
     init() {
         openRealm()
@@ -34,18 +34,24 @@ class FavouritesViewModel: ObservableObject {
         if let localRealm = localRealm {
             do {
                 try localRealm.write({
-                    let recentModel = RealmModel(value: ["name": model.name,
-                                                         "brand": model.brand,
-                                                         "category": model.category,
-                                                         "thumbnail": model.thumbnail,
-                                                         "scaleCompensation": model.scaleCompensation
-                                                        ])
-                    if !models.items.contains(where: { $0.name == recentModel.name }) {
+                    let allModels = localRealm.objects(RealmModel.self)
+                    if !allModels.contains(where: {$0.name == model.name}) {
+                        let recentModel = RealmModel(value: ["name": model.name,
+                                                             "brand": model.brand,
+                                                             "category": model.category,
+                                                             "thumbnail": model.thumbnail,
+                                                             "scaleCompensation": model.scaleCompensation
+                                                            ])
                         models.items.insert(recentModel, at: 0)
-                        localRealm.add(models)
-                        getTasks()
+                    } else {
+                        let index = allModels.firstIndex(where: {$0.name == model.name})
+                        let modelToAdd = allModels[index!]
+                        if !models.items.contains(where: { $0.name == model.name }) {
+                            models.items.insert(modelToAdd, at: 0)
+    //                        localRealm.add(models)
+                        }
                     }
-                    
+                    getTasks()
                 })
             } catch {
                 print("Error adding model to Realm: \(error)")
@@ -57,17 +63,20 @@ class FavouritesViewModel: ObservableObject {
         if let localRealm = localRealm {
             do {
                 try localRealm.write({
-                    let recentModel = RealmModel(value: ["name": model.name,
-                                                         "brand": model.brand,
-                                                         "category": model.category,
-                                                         "thumbnail": model.thumbnail,
-                                                         "scaleCompensation": model.scaleCompensation
-                                                        ])
-                    if let index = models.items.firstIndex(where: {$0.name == recentModel.name}) {
-                        models.items.remove(at: index)
-                        localRealm.add(models)
-                        getTasks()
+                    if let recentModels = localRealm.objects(Group.self).first, recentModels.items.contains(where: {$0.name == model.name}) {
+                        if let index = recentModels.items.firstIndex(where: {$0.name == model.name}) {
+//                            let modelForDeletion = recentModels.items[index]
+                            models.items.remove(at: index)
+                        }
+                    } else {
+                        if let index = models.items.firstIndex(where: {$0.name == model.name}) {
+                            let modelForDeletion = models.items[index]
+                            models.items.remove(at: index)
+                            localRealm.delete(modelForDeletion)
+                        }
                     }
+                    getTasks()
+  
                 })
             } catch {
                 print("Error adding model to Realm: \(error)")

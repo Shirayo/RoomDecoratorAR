@@ -24,6 +24,7 @@ struct ShopByBrandView: View {
                         NavigationLink {
                             CategoriesView(vm: vm,/* recentModelsViewModel: recentModelsViewModel,*/ category: nil, brand: brand.label)
                                 .environmentObject(recentModelsViewModel)
+                                .environmentObject(favouritesViewModel)
                         } label: {
                             VStack {
                                 Image(brand.label)

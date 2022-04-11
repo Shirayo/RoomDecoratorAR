@@ -151,7 +151,7 @@ struct ARViewContainer: UIViewRepresentable {
     
     func updateUIView(_ uiView: ARView, context: Context) {
         if let modelEntity = modelToPresent {
-            let anchorEntity = AnchorEntity()//(plane: .any)
+            let anchorEntity = AnchorEntity(plane: .any)
             anchorEntity.addChild(modelEntity)
            
             uiView.scene.addAnchor(anchorEntity.clone(recursive: true))
