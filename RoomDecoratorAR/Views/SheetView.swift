@@ -11,19 +11,19 @@ import RealityKit
 struct SheetView: View {
     
     @ObservedObject var vm: ContentViewModel
-    
+    @StateObject var favouritesViewModel = FavouritesViewModel()
     var body: some View {
         GeometryReader {proxy in
             VStack{
                 TabView {
-                    ShopView(vm: vm)
+                    ShopView(vm: vm).environmentObject(favouritesViewModel)
                         .tabItem {
                             Image("house")
                                 .resizable()
                                 .frame(width: 40, height: 40)
                             Text("Shop")
                         }
-                    FavouritesView()
+                    FavouritesView(vm: vm).environmentObject(favouritesViewModel)
                         .tabItem {
                             Image("heart")
                                 .resizable()
@@ -47,6 +47,7 @@ struct SheetView: View {
 //struct BottomSheetVIew_Previews: PreviewProvider {
 //    static var previews: some View {
 //        SheetView(vm: .init())
+//            .environmentObject(RecentModelsViewModel())
 //            .background(.blue)
 //    }
 //}

@@ -10,7 +10,9 @@ import SwiftUI
 struct ShopView: View {
     
     @ObservedObject var vm: ContentViewModel
-    
+    @StateObject var recentModels = RecentModelsViewModel()
+//    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
+
     var body: some View {
         NavigationView {
             VStack {
@@ -30,8 +32,14 @@ struct ShopView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     //categories
                     ShopByCategoryView(vm: vm)
+                        .environmentObject(recentModels)
+//                        .environmentObject(favouritesViewModel)
+
                     //brands
                     ShopByBrandView(vm: vm)
+                        .environmentObject(recentModels)
+//                        .environmentObject(favouritesViewModel)
+
                     //recentry viewed
                     VStack(alignment: .leading) {
                         Text("Recently viewed")
@@ -39,21 +47,30 @@ struct ShopView: View {
                             .padding(.leading)
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
-                                ForEach(Brands.allCases, id: \.self) { brand in
-                                    NavigationLink {
-                                        CategoriesView(vm: vm, brand: brand.label)
+                                ForEach(recentModels.models!.items, id: \.id) { model in
+                                    Button {
+                                        vm.selectedModel = .init(name: model.name, category: model.category, brand: model.brand, scaleCompensation: model.scaleCompensation)
                                     } label: {
-                                        VStack {
-                                            Image(brand.label)
-                                                .resizable()
-                                                .scaledToFill()
-                                                .frame(width: 100, height: 100)
-                                                .cornerRadius(15)
-                                            Text(brand.label)
-                                                .font(.system(size: 14, weight: .semibold))
+                                        VStack(alignment: .leading) {
+                                            ZStack() {
+                                                Color.gray.opacity(0.5).frame(width: 100, height: 100, alignment: .center).cornerRadius(12)
+                                                Image(uiImage: UIImage(data: model.thumbnail)!)
+                                                    .resizable()
+                                                    .frame(width: 98, height: 98)
+                                                    .cornerRadius(12)
+                                            }
+                                            Text(model.name)
+                                                .font(.system(size: 10))
                                                 .foregroundColor(.black)
-                                        }
+                                                .lineLimit(2)
+                                                .multilineTextAlignment(.leading)
+                                            Text("by \(model.brand)")
+                                                .font(.system(size: 10, weight: .light))
+                                                .foregroundColor(.gray)
+                                                .multilineTextAlignment(.leading)
+                                        }.frame(width: 100 , height: 160)
                                     }
+
                                 }
                             }.padding(.horizontal)
                         }
@@ -61,12 +78,14 @@ struct ShopView: View {
 
                 }.navigationBarHidden(true)
             }.background(.white)
+        }.onAppear {
+            print("heh")
         }
     }
 }
 
 struct ShopView_Previews: PreviewProvider {
     static var previews: some View {
-        ShopView(vm: .init())
+        ShopView(vm: .init()).environmentObject(RecentModelsViewModel()).environmentObject(FavouritesViewModel())
     }
 }

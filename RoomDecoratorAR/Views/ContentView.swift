@@ -30,7 +30,8 @@ struct ContentView : View {
     }
     @State var isSheetOpened = true
     @StateObject var contentViewModel = ContentViewModel()
-     
+
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             ARViewContainer(modelToPresent: $modelToPresent).edgesIgnoringSafeArea(.all)
@@ -81,7 +82,6 @@ struct ContentView : View {
                             .resizable()
                             .frame(width: 30, height: 30)
                             .foregroundColor(.white)
-
                     }
                     Spacer()
                     Button {
@@ -93,7 +93,6 @@ struct ContentView : View {
                             .resizable()
                             .frame(width: 40, height: 40)
                             .foregroundColor(.white)
-
                     }
                     Spacer()
                     Button {

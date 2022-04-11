@@ -13,43 +13,70 @@ struct SofaModel {
     var modelURL: String
 }
 
+struct CustomNavigationBar: View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let title: String
+    let isBackButtonVisible: Bool
+    
+    var body: some View {
+        HStack(alignment: .center) {
+            if isBackButtonVisible {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image("left-arrow")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 30, height: 30)
+                        .padding()
+                }
+                Spacer()
+                Text(title).font(.system(size: 24, weight: .bold))
+                Spacer()
+                Spacer().frame(width: 30, height: 30).padding()
+            } else {
+                Spacer()
+                Text(title).font(.system(size: 24, weight: .bold))
+                Spacer()
+            }
+        }.frame(height: 60).border(width: 1, edges: [.bottom], color: .gray.opacity(0.5))
+    }
+    
+}
+
+import Combine
+
 struct CategoriesView: View {
     
     @ObservedObject var vm: ContentViewModel
-    @ObservedObject private var categoriesViewModel = CategoriesViewModel()
+    @StateObject private var categoriesViewModel = CategoriesViewModel()
+    @EnvironmentObject var recentModelsViewModel: RecentModelsViewModel
+    
+//    var cancellable = Set<AnyCancellable>()
     var category: String?
     var brand: String?
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
         GeometryReader { proxy in
             VStack(spacing: 0) {
-                HStack(alignment: .center) {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Image("left-arrow")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 30, height: 30)
-                            .padding()
-                    }
-                    Spacer()
-                    Text(category ?? brand ?? "nihya").font(.system(size: 24, weight: .bold))
-                    Spacer()
-                    Spacer().frame(width: 30, height: 30).padding()
-                }.frame(height: 60).border(width: 1, edges: [.bottom], color: .gray.opacity(0.5))
+                CustomNavigationBar(title: category ?? brand ?? "nihya", isBackButtonVisible: true)
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: [
                         GridItem(.adaptive(minimum: proxy.size.width / 2 - 20, maximum: 600), spacing: -20),
                     ], spacing: 0, content: {
                         ForEach(categoriesViewModel.models, id: \.name) { model in
                             itemButton(model: model, vm: vm, width: proxy.size.width / 2 - 20)
+                                .environmentObject(recentModelsViewModel)
+//                                .environmentObject(favouritesViewModel)
                         }
-                    })
-                }
+                    }).background(.yellow)
+                }.background(.green)
             }
         }.onAppear() {
+//            recentModelsViewModel.$models.sink { group in
+//                print("heh")
+//            }//.store(in: &cancellable)
             if let category = category {
                 categoriesViewModel.fetchData(category: category, brand: nil)
             }
@@ -57,25 +84,27 @@ struct CategoriesView: View {
                 categoriesViewModel.fetchData(category: nil, brand: brand)
             }
         }.navigationBarHidden(true)
-            
+                
     }
 }
 
 struct itemButton: View {
     @ObservedObject var model: Model
     @ObservedObject var vm: ContentViewModel
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var recentModelsViewModel: RecentModelsViewModel
+//    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
+
     var width: CGFloat
     var body: some View {
         Button {
-            vm.selectedModel = model
-            dismiss()
+//            vm.selectedModel = model
+            recentModelsViewModel.addModel(model)
         } label: {
             VStack(alignment: .leading) {
                 ZStack() {
                     Color.gray.opacity(0.5).frame(width: width - 6, height: width - 6, alignment: .center).cornerRadius(12)
-                    if let thumbnail = model.thumbnail  {
-                        Image(uiImage: thumbnail)
+                    if model.thumbnail != Data() {
+                        Image(uiImage: UIImage(data: model.thumbnail)!)
                             .resizable()
                             .frame(width: width - 8, height: width - 8)
                             .cornerRadius(12)
@@ -84,7 +113,30 @@ struct itemButton: View {
                             .background(.white)
                             .cornerRadius(12)
                     }
-                   
+//                    if !favouritesViewModel.models.items.contains(where: { $0.name == model.name }) {
+//                        Button {
+//                            favouritesViewModel.addModel(model)
+//                        } label: {
+//                            Image("heart")
+//                                .resizable()
+//                                .scaledToFill()
+//                                .foregroundColor(.black)
+//                        }
+//                        .frame(width: 20, height: 20, alignment: .topLeading)
+//                        .position(x: 20, y: 20)
+//                    } else {
+//                        Button {
+//                            favouritesViewModel.deleteModel(model)
+//                        } label: {
+//                            Image("heart")
+//                                .resizable()
+//                                .scaledToFill()
+//                                .foregroundColor(.red)
+//                        }
+//                        .frame(width: 20, height: 20, alignment: .topLeading)
+//                        .position(x: 20, y: 20)
+//                    }
+
                 }
                 Text(model.name)
                     .font(.system(size: 14))
@@ -100,10 +152,9 @@ struct itemButton: View {
     }
 }
 
-struct CategotyView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoriesView(vm: ContentViewModel(), category: "tables")
-            .environmentObject(ContentViewModel())
-            .environmentObject(CategoriesViewModel())
-    }
-}
+//struct CategotyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CategoriesView(vm: ContentViewModel(), category: "tables")
+//            .environmentObject(CategoriesViewModel())
+//    }
+//}
