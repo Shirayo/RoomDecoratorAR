@@ -19,14 +19,11 @@ class Model: ObservableObject, Identifiable {
     var category: String
     @Published var thumbnail: Data//UIImage?
     var scaleCompensation: Float
-    
-    private var cancellable = Set<AnyCancellable>()
-    
     init(name: String, category: String, brand: String, scaleCompensation: Float = 1.0 ) {
         self.name = name
         self.brand = brand
         self.category = category
-        self .thumbnail = Data()
+        self.thumbnail = Data()
         self.scaleCompensation = scaleCompensation
         
         let modelName = self.name.replacingOccurrences(of: " ", with: "_")

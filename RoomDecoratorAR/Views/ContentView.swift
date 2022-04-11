@@ -35,6 +35,7 @@ struct ContentView : View {
     var body: some View {
         ZStack(alignment: .bottom) {
             ARViewContainer(modelToPresent: $modelToPresent).edgesIgnoringSafeArea(.all)
+//            Spacer().background(.gray).edgesIgnoringSafeArea(.all)
             if progress != 1.0 || progress != 0.0 {
                 ZStack(alignment: .center) {
                     ProgressView(value: progress, total: 1.0)
@@ -44,39 +45,63 @@ struct ContentView : View {
                 }
             }
             if contentViewModel.isPlacementEnabled {
-                Button {
-                    contentViewModel.isPlacementEnabled = false
-                    let modelName = contentViewModel.selectedModel!.name.replacingOccurrences(of: " ", with: "_")
-                    FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "models/\(modelName).usdz") { fileUrl in
-                        DispatchQueue.main.async {
-                            var cancellable: AnyCancellable? = nil
-                            cancellable = ModelEntity.loadModelAsync(contentsOf: fileUrl).sink { completion in
-                                cancellable?.cancel()
-                            } receiveValue: { entity in
-                                modelToPresent = entity
-                                modelToPresent?.scale *= contentViewModel.selectedModel!.scaleCompensation
-                                cancellable?.cancel()
+                ZStack(){
+                    LinearGradient(colors: [.black.opacity(0.5), .clear, .clear, .clear, .black.opacity(0.5)], startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
+                    VStack {
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading) {
+                                Text(contentViewModel.selectedModel?.name ?? "SAMPLE TEXT").foregroundColor(.white)
+                                Text("by \(contentViewModel.selectedModel?.brand ?? "SAMPLE TEXT")").font(.system(size: 12, weight: .light)).foregroundColor(.white)
+                            }
+                            Spacer()
+                            Button {
+                                print("close")
+                                contentViewModel.selectedModel = nil
+                            } label: {
+                                Image("close")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.white)
+                            }
+
+                        }.padding(.horizontal, 16)
+                        Spacer()
+
+                        Button {
+                            contentViewModel.isPlacementEnabled = false
+                            let modelName = contentViewModel.selectedModel!.name.replacingOccurrences(of: " ", with: "_")
+                            FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "models/\(modelName).usdz") { fileUrl in
+                                DispatchQueue.main.async {
+                                    var cancellable: AnyCancellable? = nil
+                                    cancellable = ModelEntity.loadModelAsync(contentsOf: fileUrl).sink { completion in
+                                        cancellable?.cancel()
+                                    } receiveValue: { entity in
+                                        modelToPresent = entity
+                                        modelToPresent?.scale *= contentViewModel.selectedModel!.scaleCompensation
+                                        cancellable?.cancel()
+                                    }
+                                }
+                                print(fileUrl.path)
+                            } loadProgress: { progress in
+                                self.currentSelectedIndex = progress
+                                print("LOADING: \(self.progress)")
+                            }
+                        } label: {
+                            ZStack {
+                                Color.black.opacity(0.5).frame(width: 150, height: 50, alignment: .center)
+                                    .cornerRadius(12)
+                                Text("Tap to place item")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(.white)
                             }
                         }
-                        print(fileUrl.path)
-                    } loadProgress: { progress in
-                        self.currentSelectedIndex = progress
-                        print("LOADING: \(self.progress)")
-                    }
-                } label: {
-                    ZStack {
-                        Color.black.opacity(0.5).frame(width: 150, height: 50, alignment: .center)
-                            .cornerRadius(30)
-                        Text("Tap to place item")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(.white)
-                    }
+                    }.padding(.vertical)
                 }
             } else {
                 HStack(alignment: .center) {
                     Spacer()
                     Button {
-                        print("show aletsheet to delee all objects")
+                        print("show aletsheet to delete all objects")
                     } label: {
                         Image("controls")
                             .resizable()

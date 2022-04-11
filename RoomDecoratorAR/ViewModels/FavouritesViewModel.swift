@@ -23,7 +23,6 @@ class FavouritesViewModel: ObservableObject {
             let config = Realm.Configuration(schemaVersion: 1)
             
             Realm.Configuration.defaultConfiguration = config
-            print(Realm.Configuration.defaultConfiguration.fileURL!)
             localRealm = try Realm()
         } catch {
             print("Error opening Realm: \(error)")
@@ -64,12 +63,34 @@ class FavouritesViewModel: ObservableObject {
             do {
                 try localRealm.write({
                     if let recentModels = localRealm.objects(Group.self).first, recentModels.items.contains(where: {$0.name == model.name}) {
-                        if let index = recentModels.items.firstIndex(where: {$0.name == model.name}) {
-//                            let modelForDeletion = recentModels.items[index]
+                        if let index = models.items.firstIndex(where: {$0.name == model.name}) {
                             models.items.remove(at: index)
                         }
                     } else {
                         if let index = models.items.firstIndex(where: {$0.name == model.name}) {
+                            let modelForDeletion = models.items[index]
+                            models.items.remove(at: index)
+                            localRealm.delete(modelForDeletion)
+                        }
+                    }
+                    getTasks()
+                })
+            } catch {
+                print("Error adding model to Realm: \(error)")
+            }
+        }
+    }
+    
+    func deleteModel(_ model: RealmModel) {
+        if let localRealm = localRealm {
+            do {
+                try localRealm.write({
+                    if let recentModels = localRealm.objects(Group.self).first, recentModels.items.contains(where: {$0 == model}) {
+                        if let index = models.items.firstIndex(where: {$0 == model}) {
+                            models.items.remove(at: index)
+                        }
+                    } else {
+                        if let index = models.items.firstIndex(where: {$0 == model}) {
                             let modelForDeletion = models.items[index]
                             models.items.remove(at: index)
                             localRealm.delete(modelForDeletion)

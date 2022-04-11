@@ -84,8 +84,8 @@ struct ShopView: View {
     }
 }
 
-struct ShopView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShopView(vm: .init()).environmentObject(RecentModelsViewModel()).environmentObject(FavouritesViewModel())
-    }
-}
+//struct ShopView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ShopView(vm: .init()).environmentObject(FavouritesViewModel())
+//    }
+//}
