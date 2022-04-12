@@ -10,7 +10,7 @@ import SwiftUI
 struct FavouritesView: View {
     
     @EnvironmentObject var favouritesViewModel: FavouritesViewModel
-    @ObservedObject var vm: ContentViewModel
+    @ObservedObject var contentViewModel: ContentViewModel
     var body: some View {
         VStack(spacing: 0) {
             CustomNavigationBar(title: "Favourites", isBackButtonVisible: false)
@@ -18,7 +18,7 @@ struct FavouritesView: View {
                 VStack(spacing: 0) {
                     ForEach(favouritesViewModel.models.items, id: \.id) { model in
                         Button {
-                            vm.selectedModel = .init(name: model.name, category: model.category, brand: model.brand, scaleCompensation: model.scaleCompensation)
+                            contentViewModel.selectedModel = .init(name: model.name, category: model.category, brand: model.brand, scaleCompensation: model.scaleCompensation)
                         } label: {
                             HStack(spacing: 8) {
                                 ZStack() {

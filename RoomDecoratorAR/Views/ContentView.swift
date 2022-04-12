@@ -10,9 +10,7 @@ import RealityKit
 import ARKit
 import Combine
 
-struct ARVariables{
-  static var arView: ARView!
-}
+
 
 struct ContentView : View {
     
@@ -30,7 +28,7 @@ struct ContentView : View {
     }
     @State var isSheetOpened = true
     @StateObject var contentViewModel = ContentViewModel()
-
+    @StateObject var roomItemsViewModel = RoomItemsViewModel()
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -50,12 +48,13 @@ struct ContentView : View {
                     VStack {
                         HStack(alignment: .top) {
                             VStack(alignment: .leading) {
-                                Text(contentViewModel.selectedModel?.name ?? "SAMPLE TEXT").foregroundColor(.white)
-                                Text("by \(contentViewModel.selectedModel?.brand ?? "SAMPLE TEXT")").font(.system(size: 12, weight: .light)).foregroundColor(.white)
+                                Text(contentViewModel.selectedModel?.name ?? "").foregroundColor(.white)
+                                Text("by \(contentViewModel.selectedModel?.brand ?? "")").font(.system(size: 12, weight: .light)).foregroundColor(.white)
                             }
+                           
                             Spacer()
+                            
                             Button {
-                                print("close")
                                 contentViewModel.selectedModel = nil
                             } label: {
                                 Image("close")
@@ -63,8 +62,8 @@ struct ContentView : View {
                                     .frame(width: 20, height: 20)
                                     .foregroundColor(.white)
                             }
-
                         }.padding(.horizontal, 16)
+                        
                         Spacer()
 
                         Button {
@@ -77,6 +76,15 @@ struct ContentView : View {
                                         cancellable?.cancel()
                                     } receiveValue: { entity in
                                         modelToPresent = entity
+                                        if let selectedModel = contentViewModel.selectedModel {
+                                            roomItemsViewModel.models.append(RealmModel(value: [
+                                                "name": selectedModel.name,
+                                                "brand": selectedModel.brand,
+                                                "category": selectedModel.category,
+                                                "thumbnail": selectedModel.thumbnail,
+                                                "scaleCompensation": selectedModel.scaleCompensation
+                                           ]))
+                                        }
                                         modelToPresent?.scale *= contentViewModel.selectedModel!.scaleCompensation
                                         cancellable?.cancel()
                                     }
@@ -135,63 +143,14 @@ struct ContentView : View {
                             .foregroundColor(.white)
                     }
                     Spacer()
-
                 }.padding(.bottom, 20)
                     .sheet(isPresented: $isSheetOpened) {
-                        SheetView(vm: contentViewModel)
+                        SheetView(contentViewModel: contentViewModel, roomItemsViewModel: roomItemsViewModel)
                     }
             }
         }
     }
 }
-
-struct ARViewContainer: UIViewRepresentable {
-    
-    @Binding var modelToPresent: ModelEntity?
-    
-    func makeUIView(context: Context) -> ARView {
-        
-        ARVariables.arView = CustomARView(frame: .zero)
-        
-        let config = ARWorldTrackingConfiguration()
-        config.planeDetection = [.horizontal, .vertical]
-                
-        if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) {
-            config.sceneReconstruction = .mesh
-        }
-        ARVariables.arView.session.run(config)
-        
-        let coachingOverlay = ARCoachingOverlayView()
-        coachingOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        coachingOverlay.session = ARVariables.arView.session
-        coachingOverlay.goal = .horizontalPlane
-        ARVariables.arView.addSubview(coachingOverlay)
-        
-        
-//        arView.debugOptions = [.showFeaturePoints]
-
-        return ARVariables.arView
-        
-    }
-    
-    func updateUIView(_ uiView: ARView, context: Context) {
-        if let modelEntity = modelToPresent {
-            let anchorEntity = AnchorEntity(plane: .any)
-            anchorEntity.addChild(modelEntity)
-           
-            uiView.scene.addAnchor(anchorEntity.clone(recursive: true))
-            
-            modelEntity.generateCollisionShapes(recursive: true)
-            ARVariables.arView.installGestures([.rotation, .translation], for: modelEntity as Entity & HasCollision)
-            //put model to nil maybe
-        } else {
-            print("ERROR TO LOAD MODEL OR MODEL DID NOT EXIST")
-            //error handling...
-        }
-    }
-    
-}
-
 
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {

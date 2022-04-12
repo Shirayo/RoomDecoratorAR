@@ -43,6 +43,10 @@
 		F99CE5F627EB2AE700CDF225 /* UIScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F527EB2AE700CDF225 /* UIScreenExtension.swift */; };
 		F99CE5F827EB370600CDF225 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5F727EB370600CDF225 /* ViewExtension.swift */; };
 		F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */; };
+		F9A49E1228055905008E1789 /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A49E1128055905008E1789 /* ARViewContainer.swift */; };
+		F9A49E1428055C54008E1789 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A49E1328055C54008E1789 /* CustomNavigationBar.swift */; };
+		F9A49E1628055DFC008E1789 /* RecentModelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A49E1528055DFC008E1789 /* RecentModelsView.swift */; };
+		F9A49E18280565EC008E1789 /* RoomItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A49E17280565EC008E1789 /* RoomItemsViewModel.swift */; };
 		F9C1385D27EC55790018B9EE /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1385C27EC55790018B9EE /* CategoriesView.swift */; };
 		F9C1386327EC63290018B9EE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1386227EC63290018B9EE /* Model.swift */; };
 		F9C1386527EC6E290018B9EE /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1386427EC6E290018B9EE /* ContentViewModel.swift */; };
@@ -99,6 +103,10 @@
 		F99CE5F727EB370600CDF225 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		F99CE5FA27EB372200CDF225 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		F99CE5FC27EB3E2F00CDF225 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F9A49E1128055905008E1789 /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		F9A49E1328055C54008E1789 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
+		F9A49E1528055DFC008E1789 /* RecentModelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentModelsView.swift; sourceTree = "<group>"; };
+		F9A49E17280565EC008E1789 /* RoomItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomItemsViewModel.swift; sourceTree = "<group>"; };
 		F9C1385C27EC55790018B9EE /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		F9C1386227EC63290018B9EE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F9C1386427EC6E290018B9EE /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
@@ -182,9 +190,9 @@
 		F99CE5BA27EB014200CDF225 /* RoomDecoratorAR */ = {
 			isa = PBXGroup;
 			children = (
+				F99CE5FC27EB3E2F00CDF225 /* Info.plist */,
 				84B0312D27F70CBA00C2F4E9 /* Enums */,
 				F9C1386C27EC85AE0018B9EE /* Custom Components */,
-				F99CE5FC27EB3E2F00CDF225 /* Info.plist */,
 				F99CE5F927EB371400CDF225 /* Utils */,
 				F99CE5F427EB2ACE00CDF225 /* Extensions */,
 				F99CE5E827EB08DC00CDF225 /* Models */,
@@ -228,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				F99CE5BD27EB014200CDF225 /* ContentView.swift */,
+				F9A49E1128055905008E1789 /* ARViewContainer.swift */,
 				F99CE5F227EB1D8700CDF225 /* SheetView.swift */,
 				F9C1385B27EC555A0018B9EE /* ShopView */,
 				F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */,
@@ -251,6 +260,7 @@
 				84B5128D27F30AD200A81A4B /* CategoriesViewModel.swift */,
 				F96E571827FD830100BD5DF8 /* RecentModelsViewModel.swift */,
 				F954EDD727FED7D000F4F610 /* FavouritesViewModel.swift */,
+				F9A49E17280565EC008E1789 /* RoomItemsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -281,6 +291,7 @@
 				F99CE5EC27EB0BB100CDF225 /* ShopView.swift */,
 				F901977827FC58AA0060AA5F /* ShopByCategoryView.swift */,
 				F901977A27FC5A670060AA5F /* ShopByBrandView.swift */,
+				F9A49E1528055DFC008E1789 /* RecentModelsView.swift */,
 			);
 			path = ShopView;
 			sourceTree = "<group>";
@@ -290,6 +301,7 @@
 			children = (
 				F9C1386D27EC85C10018B9EE /* CustomARView.swift */,
 				F9C1386F27EC9AC50018B9EE /* CustomProgressView.swift */,
+				F9A49E1328055C54008E1789 /* CustomNavigationBar.swift */,
 			);
 			path = "Custom Components";
 			sourceTree = "<group>";
@@ -460,13 +472,17 @@
 				F99CE5ED27EB0BB100CDF225 /* ShopView.swift in Sources */,
 				F901977927FC58AA0060AA5F /* ShopByCategoryView.swift in Sources */,
 				F9C1387027EC9AC50018B9EE /* CustomProgressView.swift in Sources */,
+				F9A49E1228055905008E1789 /* ARViewContainer.swift in Sources */,
 				84B0313127F70D1500C2F4E9 /* Brands.swift in Sources */,
 				F9C1385D27EC55790018B9EE /* CategoriesView.swift in Sources */,
 				F9C1386527EC6E290018B9EE /* ContentViewModel.swift in Sources */,
+				F9A49E18280565EC008E1789 /* RoomItemsViewModel.swift in Sources */,
+				F9A49E1428055C54008E1789 /* CustomNavigationBar.swift in Sources */,
 				F977754327FB02F4004C4E55 /* EdgeBorder.swift in Sources */,
 				F96E571927FD830100BD5DF8 /* RecentModelsViewModel.swift in Sources */,
 				F99CE5EF27EB0C0D00CDF225 /* FavouritesView.swift in Sources */,
 				F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */,
+				F9A49E1628055DFC008E1789 /* RecentModelsView.swift in Sources */,
 				F9C1386E27EC85C10018B9EE /* CustomARView.swift in Sources */,
 				F99CE5C027EB014200CDF225 /* Experience.rcproject in Sources */,
 				84B5129027F31DB100A81A4B /* FirebaseStorageHelper.swift in Sources */,
