@@ -33,11 +33,11 @@ class CategoriesViewModel: ObservableObject {
                 let data = queryDocumentSnapshot.data()
                 let name = data["name"] as? String ?? ""
                 let brand = data["brand"] as? String ?? ""
-                let category = data["category"] as? String ?? "" //Categories(rawValue: categoryText) ?? .sofas
+                let category = data["category"] as? String ?? ""
                 let scaleCompensation = data["scaleCompensation"] as? Double ?? 1.0
                 
                 //download photo
-                //return RealmModel()
+                //return RealmModel() doesn't work so 
                 return Model(name: name, category: category, brand: brand, scaleCompensation: Float(scaleCompensation))
             }
         }

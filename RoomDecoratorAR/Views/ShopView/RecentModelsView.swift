@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct RecentModelsView: View {
     
@@ -19,17 +20,25 @@ struct RecentModelsView: View {
                 .padding(.leading)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
-                    ForEach(recentModels.models!.items, id: \.id) { model in
+                    ForEach(recentModels.models.items, id: \.id) { model in
                         Button {
                             vm.selectedModel = .init(name: model.name, category: model.category, brand: model.brand, scaleCompensation: model.scaleCompensation)
                         } label: {
                             VStack(alignment: .leading) {
                                 ZStack() {
                                     Color.gray.opacity(0.5).frame(width: 100, height: 100, alignment: .center).cornerRadius(12)
-                                    Image(uiImage: UIImage(data: model.thumbnail)!)
-                                        .resizable()
-                                        .frame(width: 98, height: 98)
-                                        .cornerRadius(12)
+                                    if model.thumbnail != Data() {
+                                        Image(uiImage: UIImage(data: model.thumbnail)!)
+                                            .resizable()
+                                            .frame(width: 98, height: 98)
+                                            .cornerRadius(12)
+                                    } else {
+                                        Image("placeholder-image")
+                                            .resizable()
+                                            .frame(width: 98, height: 98)
+                                            .cornerRadius(12)
+                                    }
+                                    
                                 }
                                 Text(model.name)
                                     .font(.system(size: 10))

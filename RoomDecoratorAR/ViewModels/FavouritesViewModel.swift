@@ -7,12 +7,14 @@
 
 import Foundation
 import RealmSwift
+import SwiftUI
 
 
 class FavouritesViewModel: ObservableObject {
     private(set) var localRealm: Realm?
     @Published var models = Group()
-    
+    private var key = "6257dc8227c38828f1278112"
+
     init() {
         openRealm()
         getTasks()
@@ -24,6 +26,7 @@ class FavouritesViewModel: ObservableObject {
             
             Realm.Configuration.defaultConfiguration = config
             localRealm = try Realm()
+            models._id = try ObjectId(string: key)
         } catch {
             print("Error opening Realm: \(error)")
         }
@@ -47,7 +50,7 @@ class FavouritesViewModel: ObservableObject {
                         let modelToAdd = allModels[index!]
                         if !models.items.contains(where: { $0.name == model.name }) {
                             models.items.insert(modelToAdd, at: 0)
-    //                        localRealm.add(models)
+                            localRealm.add(models)
                         }
                     }
                     getTasks()
@@ -76,7 +79,7 @@ class FavouritesViewModel: ObservableObject {
                         let modelToAdd = allModels[index!]
                         if !models.items.contains(where: { $0.name == model.name }) {
                             models.items.insert(modelToAdd, at: 0)
-    //                        localRealm.add(models)
+                            localRealm.add(models)
                         }
                     }
                     getTasks()
@@ -136,8 +139,16 @@ class FavouritesViewModel: ObservableObject {
     
     func getTasks() {
         if let localRealm = localRealm {
-            if let favouritesModels = localRealm.objects(Group.self).last {
+            if let favouritesModels = localRealm.object(ofType: Group.self, forPrimaryKey: try! ObjectId(string: key)){
                 models = favouritesModels
+            } else {
+                do {
+                    try localRealm.write({
+                        localRealm.add(models)
+                    })
+                } catch {
+                    
+                }
             }
         }
     }

@@ -12,7 +12,7 @@ import RealityKit
 import RealmSwift
 
 class Model: ObservableObject, Identifiable {
-//    var entity: ModelEntity?
+    var entity: ModelEntity?
     var id: String = UUID().uuidString
     var name: String
     var brand: String

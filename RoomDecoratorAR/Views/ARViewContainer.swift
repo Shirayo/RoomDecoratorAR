@@ -10,16 +10,18 @@ import RealityKit
 import ARKit
 
 struct ARVariables{
-  static var arView: ARView!
+  static var arView: CustomARView!
 }
 
 struct ARViewContainer: UIViewRepresentable {
     
-    @Binding var modelToPresent: ModelEntity?
+//    @Binding var modelToPresent: ModelEntity?
+    @EnvironmentObject var modelDeletionManager: ModelDeletionManager
+    @EnvironmentObject var contentViewModel: ContentViewModel
     
-    func makeUIView(context: Context) -> ARView {
+    func makeUIView(context: Context) -> CustomARView {
         
-        ARVariables.arView = CustomARView(frame: .zero)
+        ARVariables.arView = CustomARView(frame: .zero, modelDeletionManager: modelDeletionManager)
         
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal, .vertical]
@@ -28,7 +30,11 @@ struct ARViewContainer: UIViewRepresentable {
             config.sceneReconstruction = .mesh
         }
         ARVariables.arView.session.run(config)
-        
+        self.contentViewModel.sceneObserver = ARVariables.arView.scene.subscribe(to: SceneEvents.Update.self
+                                                                                 , { event in
+            self.updateScene()
+        })
+
         let coachingOverlay = ARCoachingOverlayView()
         coachingOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         coachingOverlay.session = ARVariables.arView.session
@@ -36,25 +42,28 @@ struct ARViewContainer: UIViewRepresentable {
         ARVariables.arView.addSubview(coachingOverlay)
 //        arView.debugOptions = [.showFeaturePoints]
         return ARVariables.arView
-        
     }
     
-    func updateUIView(_ uiView: ARView, context: Context) {
-        if let modelEntity = modelToPresent {
-            let anchorEntity = AnchorEntity(plane: .any)
-            anchorEntity.addChild(modelEntity)
-           
-            uiView.scene.addAnchor(anchorEntity.clone(recursive: true))
-            
-            modelEntity.generateCollisionShapes(recursive: true)
-            ARVariables.arView.installGestures([.rotation, .translation], for: modelEntity as Entity & HasCollision)
-            //put model to nil maybe
-        } else {
-            print("ERROR TO LOAD MODEL OR MODEL DID NOT EXIST")
-            //error handling...
+    private func updateScene() {
+        ARVariables.arView.focusEntity?.isEnabled = self.contentViewModel.selectedModel != nil
+        
+        if let confirmedModel = self.contentViewModel.confirmedModel, let entity = confirmedModel.entity {
+            place(entity)
+            self.contentViewModel.selectedModel = nil
+            self.contentViewModel.confirmedModel = nil
         }
     }
     
+    private func place(_ modelEntity: ModelEntity) {
+        let clonedEntity =  modelEntity.clone(recursive: true)
+        clonedEntity.generateCollisionShapes(recursive: true)
+        ARVariables.arView.installGestures([.translation, .rotation], for: clonedEntity)
+        let anchorEntity = AnchorEntity(plane: .any)
+        anchorEntity.addChild(clonedEntity)
+        ARVariables.arView.scene.addAnchor(anchorEntity)
+    }
+    
+    func updateUIView(_ uiView: CustomARView, context: Context) {}
 }
 
 //struct ARViewContainer_Previews: PreviewProvider {

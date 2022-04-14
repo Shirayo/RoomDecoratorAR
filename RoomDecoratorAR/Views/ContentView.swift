@@ -10,11 +10,8 @@ import RealityKit
 import ARKit
 import Combine
 
-
-
 struct ContentView : View {
     
-    @State var modelToPresent: ModelEntity?
     @State var progress: Double = 0.0
     @State var currentSelectedIndex = 0.0 {
         willSet {
@@ -27,12 +24,13 @@ struct ContentView : View {
         }
     }
     @State var isSheetOpened = true
+    @StateObject var modelForDeletionManager = ModelDeletionManager()
     @StateObject var contentViewModel = ContentViewModel()
     @StateObject var roomItemsViewModel = RoomItemsViewModel()
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            ARViewContainer(modelToPresent: $modelToPresent).edgesIgnoringSafeArea(.all)
+            ARViewContainer().environmentObject(contentViewModel).environmentObject(modelForDeletionManager).edgesIgnoringSafeArea(.all)
 //            Spacer().background(.gray).edgesIgnoringSafeArea(.all)
             if progress != 1.0 || progress != 0.0 {
                 ZStack(alignment: .center) {
@@ -75,17 +73,12 @@ struct ContentView : View {
                                     cancellable = ModelEntity.loadModelAsync(contentsOf: fileUrl).sink { completion in
                                         cancellable?.cancel()
                                     } receiveValue: { entity in
-                                        modelToPresent = entity
+                                        contentViewModel.selectedModel?.entity = entity
+                                        contentViewModel.selectedModel?.entity?.scale *= contentViewModel.selectedModel!.scaleCompensation
+                                        contentViewModel.confirmedModel = contentViewModel.selectedModel
                                         if let selectedModel = contentViewModel.selectedModel {
-                                            roomItemsViewModel.models.append(RealmModel(value: [
-                                                "name": selectedModel.name,
-                                                "brand": selectedModel.brand,
-                                                "category": selectedModel.category,
-                                                "thumbnail": selectedModel.thumbnail,
-                                                "scaleCompensation": selectedModel.scaleCompensation
-                                           ]))
+                                            roomItemsViewModel.models.append(selectedModel)
                                         }
-                                        modelToPresent?.scale *= contentViewModel.selectedModel!.scaleCompensation
                                         cancellable?.cancel()
                                     }
                                 }
@@ -105,7 +98,46 @@ struct ContentView : View {
                         }
                     }.padding(.vertical)
                 }
-            } else {
+            }  else if modelForDeletionManager.entitySelectedForDeletion != nil {
+                HStack(alignment: .center) {
+                    Spacer()
+                    
+                    Button {
+                        print("cancel")
+                        modelForDeletionManager.entitySelectedForDeletion = nil
+                    } label: {
+                        Image("close")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white)
+                    }
+                    
+                    Spacer()
+
+                    Button {
+                        guard let anchor = modelForDeletionManager.entitySelectedForDeletion?.anchor else { return }
+                        if let index = roomItemsViewModel.models.firstIndex(where: { model in
+                            model.entity == modelForDeletionManager.entitySelectedForDeletion
+                        }) {
+                            print("FOUND")
+                            roomItemsViewModel.models.remove(at: index)
+                        }
+                        anchor.removeFromParent()
+                        
+                        modelForDeletionManager.entitySelectedForDeletion = nil
+                    } label: {
+                        Image("trash")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.white)
+                    }
+
+                    Spacer()
+                }.padding(.bottom, 20)
+            }
+            else {
                 HStack(alignment: .center) {
                     Spacer()
                     Button {
@@ -119,7 +151,6 @@ struct ContentView : View {
                     Spacer()
                     Button {
                         print("show sheet with tab bar")
-                        modelToPresent = nil
                         isSheetOpened = true
                     } label: {
                         Image("plus")

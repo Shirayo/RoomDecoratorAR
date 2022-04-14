@@ -10,8 +10,8 @@ import RealmSwift
 
 class RecentModelsViewModel: ObservableObject {
     private(set) var localRealm: Realm?
-    @Published var models: Group?
-    
+    @Published var models = Group()
+    private var key = "6257dcc69a3f851287c45393"
     init() {
         openRealm()
         getTasks()
@@ -22,6 +22,8 @@ class RecentModelsViewModel: ObservableObject {
             let config = Realm.Configuration(schemaVersion: 1)
             Realm.Configuration.defaultConfiguration = config
             localRealm = try Realm()
+            models._id = try ObjectId(string: key)
+            print("________\(Realm.Configuration.defaultConfiguration.fileURL!)")
         } catch {
             print("Error opening Realm: \(error)")
         }
@@ -39,14 +41,15 @@ class RecentModelsViewModel: ObservableObject {
                                                              "thumbnail": model.thumbnail,
                                                              "scaleCompensation": model.scaleCompensation
                                                             ])
-                        if !models!.items.contains(where: { $0.name == recentModel.name }) {
-                            models!.items.insert(recentModel, at: 0)
+                        if !models.items.contains(where: { $0.name == recentModel.name }) {
+                            models.items.insert(recentModel, at: 0)
                         }
                     } else {
                         let index = allModels.firstIndex(where: {$0.name == model.name})
                         let modelToAdd = allModels[index!]
-                        if !models!.items.contains(where: { $0.name == model.name }) {
-                            models!.items.insert(modelToAdd, at: 0)
+                        if !models.items.contains(where: { $0.name == model.name }) {
+                            models.items.insert(modelToAdd, at: 0)
+                            localRealm.add(models)
                         }
                     }
                     getTasks()
@@ -59,8 +62,16 @@ class RecentModelsViewModel: ObservableObject {
     
     func getTasks() {
         if let localRealm = localRealm {
-            if let recentModels = localRealm.objects(Group.self).first {
+            if let recentModels = localRealm.object(ofType: Group.self, forPrimaryKey: try! ObjectId(string: key)) {
                 models = recentModels
+            } else {
+                do {
+                    try localRealm.write({
+                        localRealm.add(models)
+                    })
+                } catch {
+                    
+                }
             }
         }
     }

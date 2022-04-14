@@ -9,9 +9,9 @@ import Foundation
 
 class RoomItemsViewModel: ObservableObject {
     
-    @Published var models = [RealmModel]()
+    @Published var models = [Model]()
     
-    func addModelToRoomItems(_ model: RealmModel) {
+    func addModelToRoomItems(_ model: Model) {
         models.append(model)
     }
     

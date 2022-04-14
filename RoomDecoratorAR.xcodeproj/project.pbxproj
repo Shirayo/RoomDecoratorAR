@@ -24,6 +24,7 @@
 		F901977927FC58AA0060AA5F /* ShopByCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F901977827FC58AA0060AA5F /* ShopByCategoryView.swift */; };
 		F901977B27FC5A670060AA5F /* ShopByBrandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F901977A27FC5A670060AA5F /* ShopByBrandView.swift */; };
 		F954EDD827FED7D000F4F610 /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F954EDD727FED7D000F4F610 /* FavouritesViewModel.swift */; };
+		F95C85072806CC6100B265BF /* ModelDeletionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95C85062806CC6100B265BF /* ModelDeletionManager.swift */; };
 		F96E571527FC7D7300BD5DF8 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = F96E571427FC7D7300BD5DF8 /* Realm */; };
 		F96E571727FC7D7300BD5DF8 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F96E571627FC7D7300BD5DF8 /* RealmSwift */; };
 		F96E571927FD830100BD5DF8 /* RecentModelsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96E571827FD830100BD5DF8 /* RecentModelsViewModel.swift */; };
@@ -82,6 +83,7 @@
 		F901977827FC58AA0060AA5F /* ShopByCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopByCategoryView.swift; sourceTree = "<group>"; };
 		F901977A27FC5A670060AA5F /* ShopByBrandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopByBrandView.swift; sourceTree = "<group>"; };
 		F954EDD727FED7D000F4F610 /* FavouritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModel.swift; sourceTree = "<group>"; };
+		F95C85062806CC6100B265BF /* ModelDeletionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDeletionManager.swift; sourceTree = "<group>"; };
 		F96E571827FD830100BD5DF8 /* RecentModelsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentModelsViewModel.swift; sourceTree = "<group>"; };
 		F977754227FB02F4004C4E55 /* EdgeBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeBorder.swift; sourceTree = "<group>"; };
 		F99CE5B827EB014200CDF225 /* RoomDecoratorAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomDecoratorAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +243,7 @@
 				F9C1385B27EC555A0018B9EE /* ShopView */,
 				F99CE5EE27EB0C0D00CDF225 /* FavouritesView.swift */,
 				F99CE5F027EB143600CDF225 /* RoomItemsView.swift */,
+				F95C85062806CC6100B265BF /* ModelDeletionManager.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				F99CE5EF27EB0C0D00CDF225 /* FavouritesView.swift in Sources */,
 				F99CE5FB27EB372200CDF225 /* RoundedCorner.swift in Sources */,
 				F9A49E1628055DFC008E1789 /* RecentModelsView.swift in Sources */,
+				F95C85072806CC6100B265BF /* ModelDeletionManager.swift in Sources */,
 				F9C1386E27EC85C10018B9EE /* CustomARView.swift in Sources */,
 				F99CE5C027EB014200CDF225 /* Experience.rcproject in Sources */,
 				84B5129027F31DB100A81A4B /* FirebaseStorageHelper.swift in Sources */,
