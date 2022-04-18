@@ -46,7 +46,6 @@ struct ARViewContainer: UIViewRepresentable {
     
     private func updateScene() {
         ARVariables.arView.focusEntity?.isEnabled = self.contentViewModel.selectedModel != nil
-        
         if let confirmedModel = self.contentViewModel.confirmedModel, let entity = confirmedModel.entity {
             place(entity)
             self.contentViewModel.selectedModel = nil

@@ -77,6 +77,7 @@ struct ContentView : View {
                                         contentViewModel.selectedModel?.entity?.scale *= contentViewModel.selectedModel!.scaleCompensation
                                         contentViewModel.confirmedModel = contentViewModel.selectedModel
                                         if let selectedModel = contentViewModel.selectedModel {
+                                            selectedModel.entity?.name = selectedModel.name
                                             roomItemsViewModel.models.append(selectedModel)
                                         }
                                         cancellable?.cancel()
@@ -101,9 +102,7 @@ struct ContentView : View {
             }  else if modelForDeletionManager.entitySelectedForDeletion != nil {
                 HStack(alignment: .center) {
                     Spacer()
-                    
                     Button {
-                        print("cancel")
                         modelForDeletionManager.entitySelectedForDeletion = nil
                     } label: {
                         Image("close")
@@ -118,11 +117,16 @@ struct ContentView : View {
                     Button {
                         guard let anchor = modelForDeletionManager.entitySelectedForDeletion?.anchor else { return }
                         if let index = roomItemsViewModel.models.firstIndex(where: { model in
-                            model.entity == modelForDeletionManager.entitySelectedForDeletion
+                            model.entity?.name == modelForDeletionManager.entitySelectedForDeletion?.name
                         }) {
-                            print("FOUND")
                             roomItemsViewModel.models.remove(at: index)
                         }
+//                        print("MODEL FOR DELETION NAME: \(modelForDeletionManager.entitySelectedForDeletion?.name)")
+//                        roomItemsViewModel.models.forEach { model in
+//                            print("MODEL NAME: \(model.entity?.name)")
+//                            print("MODEL IS ANCHORED: \(model.entity?.isAnchored)")
+
+//                        }
                         anchor.removeFromParent()
                         
                         modelForDeletionManager.entitySelectedForDeletion = nil
