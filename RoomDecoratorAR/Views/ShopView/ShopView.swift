@@ -10,8 +10,6 @@ import SwiftUI
 struct ShopView: View {
     
     @ObservedObject var contentViewModel: ContentViewModel
-    @StateObject var recentModels = RecentModelsViewModel()
-    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
 
     var body: some View {
         NavigationView {
@@ -32,17 +30,12 @@ struct ShopView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     //categories
                     ShopByCategoryView(vm: contentViewModel)
-                        .environmentObject(recentModels)
-                        .environmentObject(favouritesViewModel)
 
                     //brands
                     ShopByBrandView(vm: contentViewModel)
-                        .environmentObject(recentModels)
-                        .environmentObject(favouritesViewModel)
 
                     //recentry viewed
                     RecentModelsView(vm: contentViewModel)
-                        .environmentObject(recentModels	)
                 }.navigationBarHidden(true)
             }.background(.white)
         }.onAppear {

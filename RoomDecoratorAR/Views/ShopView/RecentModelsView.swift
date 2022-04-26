@@ -38,17 +38,19 @@ struct RecentModelsView: View {
                                             .frame(width: 98, height: 98)
                                             .cornerRadius(12)
                                     }
-                                    
                                 }
-                                Text(model.name)
-                                    .font(.system(size: 10))
-                                    .foregroundColor(.black)
-                                    .lineLimit(2)
-                                    .multilineTextAlignment(.leading)
-                                Text("by \(model.brand)")
-                                    .font(.system(size: 10, weight: .light))
-                                    .foregroundColor(.gray)
-                                    .multilineTextAlignment(.leading)
+                                VStack(alignment: .leading) {
+                                    Text(model.name)
+                                        .font(.system(size: 10))
+                                        .foregroundColor(.black)
+                                        .lineLimit(2)
+                                        .multilineTextAlignment(.leading)
+                                    Text("by \(model.brand)")
+                                        .font(.system(size: 10, weight: .light))
+                                        .foregroundColor(.gray)
+                                        .multilineTextAlignment(.leading)
+                                    Spacer()
+                                }
                             }.frame(width: 100 , height: 160)
                         }
 

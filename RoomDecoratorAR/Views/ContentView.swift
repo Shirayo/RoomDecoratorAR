@@ -13,16 +13,16 @@ import Combine
 struct ContentView : View {
     
     @State var progress: Double = 0.0
-    @State var currentSelectedIndex = 0.0 {
-        willSet {
-            if progress < self.currentSelectedIndex {
-                progress = self.currentSelectedIndex
-            }
-            if currentSelectedIndex == 1.0 {
-                progress = 0.0
-            }
-        }
-    }
+//    @State var currentSelectedIndex = 0.0 {
+//        willSet {
+//            if progress < self.currentSelectedIndex {
+//                progress = self.currentSelectedIndex
+//            }
+//            if currentSelectedIndex == 1.0 {
+//                progress = 0.0
+//            }
+//        }
+//    }
     @State var isSheetOpened = true
     @StateObject var modelForDeletionManager = ModelDeletionManager()
     @StateObject var contentViewModel = ContentViewModel()
@@ -30,7 +30,10 @@ struct ContentView : View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            ARViewContainer().environmentObject(contentViewModel).environmentObject(modelForDeletionManager).edgesIgnoringSafeArea(.all)
+            ARViewContainer()
+                .environmentObject(contentViewModel)
+                .environmentObject(modelForDeletionManager)
+                .edgesIgnoringSafeArea(.all)
 //            Spacer().background(.gray).edgesIgnoringSafeArea(.all)
             if progress != 1.0 || progress != 0.0 {
                 ZStack(alignment: .center) {
@@ -41,105 +44,13 @@ struct ContentView : View {
                 }
             }
             if contentViewModel.isPlacementEnabled {
-                ZStack(){
-                    LinearGradient(colors: [.black.opacity(0.5), .clear, .clear, .clear, .black.opacity(0.5)], startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
-                    VStack {
-                        HStack(alignment: .top) {
-                            VStack(alignment: .leading) {
-                                Text(contentViewModel.selectedModel?.name ?? "").foregroundColor(.white)
-                                Text("by \(contentViewModel.selectedModel?.brand ?? "")").font(.system(size: 12, weight: .light)).foregroundColor(.white)
-                            }
-                           
-                            Spacer()
-                            
-                            Button {
-                                contentViewModel.selectedModel = nil
-                            } label: {
-                                Image("close")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.white)
-                            }
-                        }.padding(.horizontal, 16)
-                        
-                        Spacer()
-
-                        Button {
-                            contentViewModel.isPlacementEnabled = false
-                            let modelName = contentViewModel.selectedModel!.name.replacingOccurrences(of: " ", with: "_")
-                            FirebaseStorageHelper.asyncDownloadToFilesystem(relativePath: "models/\(modelName).usdz") { fileUrl in
-                                DispatchQueue.main.async {
-                                    var cancellable: AnyCancellable? = nil
-                                    cancellable = ModelEntity.loadModelAsync(contentsOf: fileUrl).sink { completion in
-                                        cancellable?.cancel()
-                                    } receiveValue: { entity in
-                                        contentViewModel.selectedModel?.entity = entity
-                                        contentViewModel.selectedModel?.entity?.scale *= contentViewModel.selectedModel!.scaleCompensation
-                                        contentViewModel.confirmedModel = contentViewModel.selectedModel
-                                        if let selectedModel = contentViewModel.selectedModel {
-                                            selectedModel.entity?.name = selectedModel.name
-                                            roomItemsViewModel.models.append(selectedModel)
-                                        }
-                                        cancellable?.cancel()
-                                    }
-                                }
-                                print(fileUrl.path)
-                            } loadProgress: { progress in
-                                self.currentSelectedIndex = progress
-                                print("LOADING: \(self.progress)")
-                            }
-                        } label: {
-                            ZStack {
-                                Color.black.opacity(0.5).frame(width: 150, height: 50, alignment: .center)
-                                    .cornerRadius(12)
-                                Text("Tap to place item")
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .foregroundColor(.white)
-                            }
-                        }
-                    }.padding(.vertical)
-                }
+                PlaceView(currentSelectedIndex: $progress)
+                    .environmentObject(contentViewModel)
+                    .environmentObject(roomItemsViewModel)
             }  else if modelForDeletionManager.entitySelectedForDeletion != nil {
-                HStack(alignment: .center) {
-                    Spacer()
-                    Button {
-                        modelForDeletionManager.entitySelectedForDeletion = nil
-                    } label: {
-                        Image("close")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
-                    }
-                    
-                    Spacer()
-
-                    Button {
-                        guard let anchor = modelForDeletionManager.entitySelectedForDeletion?.anchor else { return }
-                        if let index = roomItemsViewModel.models.firstIndex(where: { model in
-                            model.entity?.name == modelForDeletionManager.entitySelectedForDeletion?.name
-                        }) {
-                            roomItemsViewModel.models.remove(at: index)
-                        }
-//                        print("MODEL FOR DELETION NAME: \(modelForDeletionManager.entitySelectedForDeletion?.name)")
-//                        roomItemsViewModel.models.forEach { model in
-//                            print("MODEL NAME: \(model.entity?.name)")
-//                            print("MODEL IS ANCHORED: \(model.entity?.isAnchored)")
-
-//                        }
-                        anchor.removeFromParent()
-                        
-                        modelForDeletionManager.entitySelectedForDeletion = nil
-                    } label: {
-                        Image("trash")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
-                    }
-
-                    Spacer()
-                }.padding(.bottom, 20)
+                DeleteView()
+                    .environmentObject(modelForDeletionManager)
+                    .environmentObject(roomItemsViewModel)
             }
             else {
                 HStack(alignment: .center) {

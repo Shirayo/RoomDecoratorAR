@@ -13,8 +13,8 @@ struct CategoriesView: View {
     
     @ObservedObject var vm: ContentViewModel
     @StateObject private var categoriesViewModel = CategoriesViewModel()
-    @EnvironmentObject var recentModelsViewModel: RecentModelsViewModel
-    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
+//    @EnvironmentObject var recentModelsViewModel: RecentModelsViewModel
+//    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
     
     var category: String?
     var brand: String?
@@ -29,8 +29,8 @@ struct CategoriesView: View {
                     ], spacing: 0, content: {
                         ForEach(categoriesViewModel.models, id: \.name) { model in
                             itemButton(model: model, vm: vm, width: proxy.size.width / 2 - 20)
-                                .environmentObject(recentModelsViewModel)
-                                .environmentObject(favouritesViewModel)
+//                                .environmentObject(recentModelsViewModel)
+//                                .environmentObject(favouritesViewModel)
                         }
                     })
                 }
@@ -43,7 +43,6 @@ struct CategoriesView: View {
                 categoriesViewModel.fetchData(category: nil, brand: brand)
             }
         }.navigationBarHidden(true)
-                
     }
 }
 
@@ -95,18 +94,20 @@ struct itemButton: View {
                         .frame(width: 20, height: 20, alignment: .topLeading)
                         .position(x: 20, y: 20)
                     }
-
                 }
-                Text(model.name)
-                    .font(.system(size: 14))
-                    .foregroundColor(.black)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                Text("by \(model.brand)")
-                    .font(.system(size: 12, weight: .light))
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.leading)
-            }.frame(width: width, height: width + 60)
+                VStack(alignment: .leading) {
+                    Text(model.name)
+                        .font(.system(size: 14))
+                        .foregroundColor(.black)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                    Text("by \(model.brand)")
+                        .font(.system(size: 12, weight: .light))
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }.frame(height: 60).padding(.horizontal, 8)
+            }.frame(width: width, height: width + 60).padding(.top)
         }
     }
 }

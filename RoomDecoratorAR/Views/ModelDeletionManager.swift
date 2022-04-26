@@ -15,12 +15,12 @@ class ModelDeletionManager: ObservableObject {
             if self.entitySelectedForDeletion == nil, let newlySelectedModelEntity = newValue {
                 print("Selecting new entitySelectedForDeletion, no prior selection")
                 
-                let component = ModelDebugOptionsComponent(visualizationMode: .lightingDiffuse)
+                let component = ModelDebugOptionsComponent(visualizationMode: .baseColor)
                 newlySelectedModelEntity.modelDebugOptions = component
             } else if let previoslySelectedModelEntity = self.entitySelectedForDeletion, let newlySelectedModelEntity = newValue {
                 //Un-highlight previouslySelectedModelEntity
                 previoslySelectedModelEntity.modelDebugOptions = nil
-                let component = ModelDebugOptionsComponent(visualizationMode: .lightingDiffuse)
+                let component = ModelDebugOptionsComponent(visualizationMode: .baseColor)
                 newlySelectedModelEntity.modelDebugOptions = component
             } else if newValue == nil {
                 print("clearing entitySelectedForDeletion")

@@ -15,7 +15,6 @@ struct ARVariables{
 
 struct ARViewContainer: UIViewRepresentable {
     
-//    @Binding var modelToPresent: ModelEntity?
     @EnvironmentObject var modelDeletionManager: ModelDeletionManager
     @EnvironmentObject var contentViewModel: ContentViewModel
     
@@ -56,12 +55,11 @@ struct ARViewContainer: UIViewRepresentable {
     private func place(_ modelEntity: ModelEntity) {
         let clonedEntity =  modelEntity.clone(recursive: true)
         clonedEntity.generateCollisionShapes(recursive: true)
-        ARVariables.arView.installGestures([.translation, .rotation], for: clonedEntity)
-        let anchorEntity = AnchorEntity(plane: .any)
+        let anchorEntity = AnchorEntity(plane: .horizontal)
         anchorEntity.addChild(clonedEntity)
         ARVariables.arView.scene.addAnchor(anchorEntity)
     }
-    
+
     func updateUIView(_ uiView: CustomARView, context: Context) {}
 }
 

@@ -13,18 +13,23 @@ struct SheetView: View {
     @ObservedObject var contentViewModel: ContentViewModel
     @ObservedObject var roomItemsViewModel: RoomItemsViewModel
     @StateObject var favouritesViewModel = FavouritesViewModel()
+    @StateObject var recentModelsViewModel = RecentModelsViewModel()
+
     var body: some View {
         GeometryReader {proxy in
             VStack{
                 TabView {
-                    ShopView(contentViewModel: contentViewModel).environmentObject(favouritesViewModel)
+                    ShopView(contentViewModel: contentViewModel)
+                        .environmentObject(favouritesViewModel)
+                        .environmentObject(recentModelsViewModel)
                         .tabItem {
                             Image("house")
                                 .resizable()
                                 .frame(width: 40, height: 40)
                             Text("Shop")
                         }
-                    FavouritesView(contentViewModel: contentViewModel).environmentObject(favouritesViewModel)
+                    FavouritesView(contentViewModel: contentViewModel)
+                        .environmentObject(favouritesViewModel)
                         .tabItem {
                             Image("heart")
                                 .resizable()

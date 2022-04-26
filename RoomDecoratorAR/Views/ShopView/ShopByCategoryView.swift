@@ -10,8 +10,6 @@ import SwiftUI
 struct ShopByCategoryView: View {
     
     @ObservedObject var vm: ContentViewModel
-    @EnvironmentObject var recentModelsViewModel: RecentModelsViewModel
-    @EnvironmentObject var favouritesViewModel: FavouritesViewModel
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,9 +20,7 @@ struct ShopByCategoryView: View {
                 HStack(spacing: 12) {
                     ForEach(Categories.allCases, id: \.self) { category in
                         NavigationLink {
-                            CategoriesView(vm: vm/*, recentModelsViewModel: recentModelsViewModel*/, category: category.label, brand: nil)
-                                .environmentObject(recentModelsViewModel)
-                                .environmentObject(favouritesViewModel)
+                            CategoriesView(vm: vm, category: category.label, brand: nil)
                         } label: {
                             VStack {
                                 Image(category.label)

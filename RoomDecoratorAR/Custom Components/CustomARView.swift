@@ -9,6 +9,7 @@ import Foundation
 import ARKit
 import RealityKit
 import FocusEntity
+import RealmSwift
 
 class CustomARView: ARView {
 
@@ -44,18 +45,23 @@ class CustomARView: ARView {
 extension CustomARView {
     func enableObjectDeletion() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+        longPressGesture.name = "longPress"
         self.addGestureRecognizer(longPressGesture)
     }
     
     @objc func handleLongPress(recognizer: UILongPressGestureRecognizer) {
         let location = recognizer.location(in: self)
         print("long press on locaion: \(location)")
+
         if let entity = self.entity(at: location) as? ModelEntity {
             print("entity captured")
+            let index = self.gestureRecognizers?.firstIndex(where: { gesture in
+                gesture.name == "longPress"
+            })
+            self.gestureRecognizers![index!].isEnabled = false
             modelForDeletionManager.entitySelectedForDeletion = entity
-            self.removeGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:))))
-        } else {
-            modelForDeletionManager.entitySelectedForDeletion = nil
+            modelForDeletionManager.entitySelectedForDeletion!.anchor?.position.y += 0.025
+            self.installGestures([.translation, .rotation], for: modelForDeletionManager.entitySelectedForDeletion!)
         }
     }
 }
